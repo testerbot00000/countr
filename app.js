@@ -19,6 +19,7 @@ client.on('message', message => {
     if (message.author.id == client.user.id) return;
 
     if (message.channel.id == getCountingChannel(message.guild.id)) {
+        if (message.author.bot) return message.delete()
         let count = getCount(message.guild.id)[0];
         let user = getCount(message.guild.id)[1];
         if (message.author.id == user) return message.delete() // we want someone else to count before the same person counts
@@ -26,6 +27,8 @@ client.on('message', message => {
         addToCount(message.guild.id, message.author.id); count += 1;
         message.channel.setTopic("**Next count: **" + (count + 1));
     }
+
+    if (message.author.bot) return;
 
     if (content.startsWith("c!channel")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
