@@ -20,6 +20,12 @@ That's it!
 Since we can change our names on Discord whenever we want, you can find us on the [support server](https://discord.gg/JbHX5U3).
 
 ** **
+<big>Vote for us</big>
+
+To support us free, please vote on our bot at [DiscordBots.org](https://discordbots.org/bot/467377486141980682).
+I don't like money donations, but a vote would mean a lot :)
+
+** **
 <big>Keep in mind!</big>
 
 - To avoid spam of the bot and the channel, you can only send a number after someone else has.
