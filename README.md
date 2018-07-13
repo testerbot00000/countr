@@ -26,6 +26,11 @@ To support us free, please vote on our bot at [DiscordBots.org](https://discordb
 I don't like money donations, but a vote would mean a lot :)
 
 ** **
+<big>Troubleshooting</big>
+
+We also have a troubleshoot-command, `c!troubleshoot`, that tells you what's wrong with the bot. If there still are issues with the bot, please join the support server and ask for help.
+
+** **
 <big>Keep in mind!</big>
 
 - To avoid spam of the bot and the channel, you can only send a number after someone else has.
