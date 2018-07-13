@@ -6,10 +6,10 @@ const client = new Discord.Client({ disableEveryone: true })
 client.on('ready', () => {
     console.log("Ready!")
 
-    client.user.setActivity("counting channels (" + fs.readFileSync('./counts.txt') + " global counts)", { type: "WATCHING" })
+    client.user.setActivity("people count (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
     
     setInterval(() => {
-        client.user.setActivity("counting channels (" + fs.readFileSync('./counts.txt') + " global counts)", { type: "WATCHING" })
+        client.user.setActivity("people count (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
     }, 60000)
 })
 
@@ -21,9 +21,6 @@ client.on('message', message => {
     if (message.channel.id == getCountingChannel(message.guild.id)) {
         let count = getCount(message.guild.id)[0];
         let user = getCount(message.guild.id)[1];
-        console.log(message.author.id)
-        console.log(user)
-        console.log(message.author.id == user)
         if (message.author.id == user) return message.delete() // we want someone else to count before the same person counts
         if (message.content != (count + 1).toString()) return message.delete()
         addToCount(message.guild.id, message.author.id); count += 1;
@@ -46,34 +43,34 @@ client.on('message', message => {
 })
 
 function saveCountingChannel(guildid, channelid) {
-    let file = JSON.parse(fs.readFileSync('./guilds.json'))
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
     file[guildid].channel = channelid;
 
-    fs.writeFileSync('./guilds.json', JSON.stringify(file))
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
 }
 
 function getCountingChannel(guildid) {
-    let file = JSON.parse(fs.readFileSync('./guilds.json'))
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
 
     return file[guildid].channel;
 }
 
 function addToCount(guildid, userid) {
-    let file = JSON.parse(fs.readFileSync('./guilds.json'))
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
     if (!parseInt(file[guildid].count)) file[guildid].count = 0;
     file[guildid].count += 1;
     file[guildid].user = userid;
 
-    fs.writeFileSync('./guilds.json', JSON.stringify(file))
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
     
-    fs.writeFileSync('./counts.txt', parseInt(fs.readFileSync('./counts.txt')) + 1)
+    fs.writeFileSync('./_counts.txt', parseInt(fs.readFileSync('./_counts.txt')) + 1)
 }
 
 function getCount(guildid) {
-    let file = JSON.parse(fs.readFileSync('./guilds.json'))
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
     if (!parseInt(file[guildid].count)) file[guildid].count = 0;
 
@@ -81,12 +78,12 @@ function getCount(guildid) {
 }
 
 function resetCount(guildid) {
-    let file = JSON.parse(fs.readFileSync('./guilds.json'))
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
     file[guildid].count = 0;
     file[guildid].user = "0";
 
-    fs.writeFileSync('./guilds.json', JSON.stringify(file))
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
 }
 
-client.login(require("./TOKEN.js").TOKEN)
+client.login(require("./_TOKEN.js").TOKEN)
