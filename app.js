@@ -28,16 +28,25 @@ client.on('message', message => {
     }
 
     if (content.startsWith("c!channel")) {
-        if (!message.member.hasPermission("MANAGE_SERVER")) return message.channel.send(":x: You don't have permission!")
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
         saveCountingChannel(message.guild.id, message.channel.id)
         return message.channel.send(":white_check_mark: From now on, this channel will be used for counting.");
     } else if (content.startsWith("c!reset")) {
-        if (!message.member.hasPermission("MANAGE_SERVER")) return message.channel.send(":x: You don't have permission!")
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
         resetCount(message.guild.id);
 
         let channel = message.guild.channels.get(getCountingChannel(message.guild.id));
         if (channel) channel.setTopic("**Next count: **1");
         return message.channel.send(":white_check_mark: Counting has been reset.");
+    } else if (content.startsWith("c!troubleshoot")) {
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
+        let channel = message.guild.channels.get(getCountingChannel(message.guild.id))
+        if (!channel) return message.channel.send("The channel does not exist. To set a channel, type `c!channel` in the specified channel.")
+        let bitfield = message.channel.permissionsFor(client.user)
+        if (bitfield & 0x400 == 0) return message.channel.send("The bot cannot see the channel.")
+        if (bitfield & 0x10 == 0) return message.channel.send("The bot cannot edit the channel. (topic)")
+        if (bitfield & 0x2000 == 0) return message.channel.send("The bot cannot delete unimportant messages from the channel.")
+        message.channel.send("Troubleshooting didn't get far. Either it's working or something else is wrong. Ask for support in the support channel.")
     }
 
 })
