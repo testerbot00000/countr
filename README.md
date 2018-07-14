@@ -6,7 +6,7 @@
 
 </div>
 
-**Countr** is a counting bot and can be set up in 3 simple steps, explained.
+**Countr** is a simple counting bot and can be set up in 3 simple steps, explained.
 1. Add the bot using [this](https://discordapp.com/api/oauth2/authorize?client_id=467377486141980682&permissions=11280&scope=bot) link. 
 2. Make a channel (for example #counting-channel)
 3. Type `c!channel` in the channel you created
