@@ -13,6 +13,14 @@
 
 That's it!
 ** **
+<big>Purpose</big>
+
+There are different purposes:
+- Guild administrators can give out prizes for each X counts
+- They can also hype the members up by trying to get a milestone
+- Or just have fun while counting to infinity.
+
+** **
 <big>Permissions</big>
 
 If you're super pecky about giving bots permissions, read this:
@@ -50,11 +58,11 @@ We also have a troubleshoot-command, `c!troubleshoot`, that tells you what's wro
 <big>Keep in mind!</big>
 
 - To avoid spam of the bot and the channel, you can only send a number after someone else has.
-- You can reset the counter with `c!reset`.
+- You can reset the counter with `c!reset`. This action is final.
 - The only information we store in our systems are:
 	- The counting channel ID
 	- How many counts in that channel
 	- The user ID of the last count in that channel
-	- Global counts
+	- Global counts (for the activity of the bot)
 
 Any other questions can go to our [support server](https://discord.gg/JbHX5U3).
