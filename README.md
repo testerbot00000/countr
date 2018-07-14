@@ -1,3 +1,4 @@
+
 <div style="background:white url(https://i.imgur.com/QiCG7sd.png) repeat fixed;">
 <div align="center">
   
@@ -5,12 +6,27 @@
 
 </div>
 
-**Countr** is a counting bot and can be set up in 3 simple steps.
-1. Add the bot using [this](https://discordapp.com/api/oauth2/authorize?client_id=467377486141980682&permissions=11280&scope=bot) link. The bot requires these permissions to function correctly.
+**Countr** is a counting bot and can be set up in 3 simple steps, explained.
+1. Add the bot using [this](https://discordapp.com/api/oauth2/authorize?client_id=467377486141980682&permissions=11280&scope=bot) link. 
 2. Make a channel (for example #counting-channel)
 3. Type `c!channel` in the channel you created
 
 That's it!
+** **
+<big>Permissions</big>
+
+If you're super pecky about giving bots permissions, read this:
+- Read Messages
+	- A basic permission that you should allow everyone to have. It requires to read the counting channel to see if there are any messages that are not part of the counting. It also requires to look for commands.
+- Send Messages
+	- Another basic permission. It requires to respond to the commands.
+- Manage Channels
+	- The topic of the channel is used to display the next number.
+- Manage Messages
+	- If a message is not part of the counting or not the next number in the counting, it deletes it.
+
+If you want to, you can make these permissions only work in the counting channel. 
+
 ** **
 <big>Contributors</big>
 
@@ -40,3 +56,5 @@ We also have a troubleshoot-command, `c!troubleshoot`, that tells you what's wro
 	- How many counts in that channel
 	- The user ID of the last count in that channel
 	- Global counts
+
+Any other questions can go to our [support server](https://discord.gg/JbHX5U3).
