@@ -12,6 +12,8 @@
 3. Type `c!channel` in the channel you created
 
 That's it!
+
+We have also made a bot tutorial on how to use the bot. [Watch the video on Vimeo.](https://vimeo.com/280228205)
 ** **
 <big>Purpose</big>
 
