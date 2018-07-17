@@ -1,7 +1,10 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+const DBL = require('dblapi.js');
 
 const client = new Discord.Client({ disableEveryone: true })
+const manager = new Discord.ShardingManager(__dirname + '/app.js', { totalShards: "auto" })
+const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
 
 client.on('ready', () => {
     console.log("Ready!")
@@ -11,6 +14,10 @@ client.on('ready', () => {
     setInterval(() => {
         client.user.setActivity("people count (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
     }, 60000)
+
+    setInterval(() => {
+        dbl.postStats(client.guilds.size, client.shards.Id, client.shards.total);
+    }, 1800000)
 })
 
 client.on('message', message => {
@@ -41,17 +48,7 @@ client.on('message', message => {
         let channel = message.guild.channels.get(getCountingChannel(message.guild.id));
         if (channel) channel.setTopic("**Next count: **1");
         return message.channel.send(":white_check_mark: Counting has been reset.");
-    } else if (content.startsWith("c!troubleshoot")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
-        let channel = message.guild.channels.get(getCountingChannel(message.guild.id))
-        if (!channel) return message.channel.send("The channel does not exist. To set a channel, type `c!channel` in the specified channel.")
-        let bitfield = message.channel.permissionsFor(client.user)
-        if (bitfield & 0x400 == 0) return message.channel.send("The bot cannot see the channel.")
-        if (bitfield & 0x10 == 0) return message.channel.send("The bot cannot edit the channel. (topic)")
-        if (bitfield & 0x2000 == 0) return message.channel.send("The bot cannot delete unimportant messages from the channel.")
-        message.channel.send("Troubleshooting didn't get far. Either it's working or something else is wrong. Ask for support in the support channel.")
     }
-
 })
 
 function saveCountingChannel(guildid, channelid) {
@@ -99,3 +96,5 @@ function resetCount(guildid) {
 }
 
 client.login(require("./_TOKEN.js").TOKEN)
+manager.spawn()
+manager.on('launch', shard => console.log(`Successfully launched shard ${shard.id}`));
