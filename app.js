@@ -14,8 +14,9 @@ client.on('ready', () => {
         client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
     }, 60000)
 
+    dbl.postStats(client.guilds.size, client.shard.id, client.shard.count);
     setInterval(() => {
-        dbl.postStats(client.guilds.size, client.shards.Id, client.shards.total);
+        dbl.postStats(client.guilds.size, client.shard.id, client.shard.count);
     }, 1800000)
 })
 
