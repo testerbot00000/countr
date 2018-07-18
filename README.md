@@ -48,13 +48,8 @@ Since we can change our names on Discord whenever we want, you can find us on th
 ** **
 <big>Vote for us</big>
 
-To support us free, please vote on our bot at [DiscordBots.org](https://discordbots.org/bot/467377486141980682).
+To support us free, please vote on our bot at [DiscordBots.org](https://discordbots.org/bot/467377486141980682/vote).
 I don't like money donations, but a vote would mean a lot :)
-
-** **
-<big>Troubleshooting</big>
-
-We also have a troubleshoot-command, `c!troubleshoot`, that tells you what's wrong with the bot. If there still are issues with the bot, please join the support server and ask for help.
 
 ** **
 <big>Keep in mind!</big>
@@ -66,5 +61,6 @@ We also have a troubleshoot-command, `c!troubleshoot`, that tells you what's wro
 	- How many counts in that channel
 	- The user ID of the last count in that channel
 	- Global counts (for the activity of the bot)
+- By using our bot you also agree that changes can be made and downtime can occour.
 
 Any other questions can go to our [support server](https://discord.gg/JbHX5U3).
