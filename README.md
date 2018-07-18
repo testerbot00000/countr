@@ -25,7 +25,7 @@ There are different purposes:
 ** **
 <big>Moving count from another bot</big>
 
-We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to move it and we will check it out.
+We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to check it out.
 Note: Faking counts to get a higher count is not allowed.
 
 ** **
@@ -54,8 +54,11 @@ Since we can change our names on Discord whenever we want, you can find us on th
 ** **
 <big>Vote for us</big>
 
-To support us free, please vote on our bot at [DiscordBots.org](https://discordbots.org/bot/467377486141980682/vote).
-I don't like money donations, but a vote would mean a lot :)
+To support us free, please vote on our bot at these bot sites:
+- [DiscordBots.org](https://discordbots.org/bot/467377486141980682/vote) (main bot site)
+- [Boatlist.ml](https://boatlist.ml/bot/467377486141980682)
+
+I don't like money donations, but votes would mean a lot :)
 
 ** **
 <big>Keep in mind!</big>
