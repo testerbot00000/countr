@@ -8,10 +8,10 @@ const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
 client.on('ready', () => {
     console.log("Ready!")
 
-    client.user.setActivity("people count (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
+    client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
     
     setInterval(() => {
-        client.user.setActivity("people count (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
+        client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
     }, 60000)
 
     setInterval(() => {
@@ -32,6 +32,7 @@ client.on('message', message => {
         if (message.content != (count + 1).toString()) return message.delete()
         addToCount(message.guild.id, message.author.id); count += 1;
         message.channel.setTopic("**Next count: **" + (count + 1));
+        return;
     }
 
     if (message.author.bot) return;
@@ -47,6 +48,8 @@ client.on('message', message => {
         let channel = message.guild.channels.get(getCountingChannel(message.guild.id));
         if (channel) channel.setTopic("**Next count: **1");
         return message.channel.send(":white_check_mark: Counting has been reset.");
+    } else if (content.startsWith("c!info")) {
+        return message.channel.send("**Please go to our Discordbots.org-page to read more about the bot: **https://discordbots.org/bot/467377486141980682")
     }
 })
 
