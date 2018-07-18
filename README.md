@@ -23,6 +23,12 @@ There are different purposes:
 - Or just have fun while counting to infinity.
 
 ** **
+<big>Moving count from another bot</big>
+
+We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to move it and we will check it out.
+Note: Faking counts to get a higher count is not allowed.
+
+** **
 <big>Permissions</big>
 
 If you're super pecky about giving bots permissions, read this:
