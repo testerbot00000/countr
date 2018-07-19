@@ -23,6 +23,28 @@ There are different purposes:
 - Or just have fun while counting to infinity.
 
 ** **
+<big>Commands & Modules</big>
+
+| Command & Usage       | Description                                           | Permission     |
+|:----------------------|:------------------------------------------------------|:---------------|
+| `c!channel`           | Set the channel to the guild's counting channel.      | `MANAGE_GUILD` |
+| `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
+| `c!info`              | Get information about the bot                         |
+| `c!toggle [module]`   | Toggle modules. Leave empty to get a list of modules. | `MANAGE_GUILD` |
+| `c!subscribe [count]` | Subscribe to a count in the guild.                    |
+| `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
+
+| Module    | Description                                                     |
+|:----------|:----------------------------------------------------------------|
+| `talking` | Allow users to send a message after the count. Ex. `20 blabla`. |
+
+** **
+<big>Moving count from another bot</big>
+
+We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to check it out.
+Note: Faking counts to get a higher count is not allowed.
+
+** **
 <big>Permissions</big>
 
 If you're super pecky about giving bots permissions, read this:
@@ -48,8 +70,11 @@ Since we can change our names on Discord whenever we want, you can find us on th
 ** **
 <big>Vote for us</big>
 
-To support us free, please vote on our bot at [DiscordBots.org](https://discordbots.org/bot/467377486141980682/vote).
-I don't like money donations, but a vote would mean a lot :)
+To support us free, please vote on our bot at these bot sites:
+- [DiscordBots.org](https://discordbots.org/bot/467377486141980682/vote) (main bot site)
+- [Boatlist.ml](https://boatlist.ml/bot/467377486141980682)
+
+I don't like money donations, but votes would mean a lot :)
 
 ** **
 <big>Keep in mind!</big>
