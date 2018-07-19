@@ -24,15 +24,21 @@ client.on('message', message => {
     let content = message.content.toLowerCase();
 
     if (message.author.id == client.user.id) return;
+    
+    if (!message.guild) return message.channel.send(":x: This bot can only be used in guilds. If you want to read more, please go to our Discordbots.org-page: https://discordbots.org/bot/467377486141980682") // dms
 
     if (message.channel.id == getCountingChannel(message.guild.id)) {
         if (message.author.bot) return message.delete()
         let count = getCount(message.guild.id)[0];
         let user = getCount(message.guild.id)[1];
+        if (message.content.startsWith("!") && message.member.hasPermission("MANAGE_GUILD")) return; // if it starts with ! and the user has MANAGE_GUILD then don't process it.
+        if (message.type != "DEFAULT") return; // ex. pin messages gets ignored
         if (message.author.id == user) return message.delete() // we want someone else to count before the same person counts
-        if (message.content != (count + 1).toString()) return message.delete()
+        if (message.content.split(" ")[0] != (count + 1).toString()) return message.delete() // message.content.split(" ").splice(1)[0] = first word/number
+        if (!moduleActivated(message.guild.id, "talking") && message.content != (count + 1).toString()) return message.delete() // if the module "talking" isn't activated and there's some text after it, we delete it as well
         addToCount(message.guild.id, message.author.id); count += 1;
-        message.channel.setTopic("**Next count: **" + (count + 1));
+        checkSubscribed(message.guild.id, count, user);
+        message.channel.setTopic((getTopic(message.guild.id) == "" ? "" : getTopic(message.guild.id) + " | ") + "**Next count: **" + (count + 1));
         return;
     }
 
@@ -51,6 +57,34 @@ client.on('message', message => {
         return message.channel.send(":white_check_mark: Counting has been reset.");
     } else if (content.startsWith("c!info")) {
         return message.channel.send("**Please go to our Discordbots.org-page to read more about the bot: **https://discordbots.org/bot/467377486141980682")
+    } else if (content.startsWith("c!toggle")) {
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
+        let arg = message.content.split(" ").splice(1)[0] // gets the first arg and makes it lower case
+        if (!arg) {
+            return message.channel.send(":clipboard: Modules: \`" + modules.join("\`, \`") + "\` - To read more about them, go to the Discordbots.org-page. Link located under the command `c!info`")
+        }
+        arg = arg.toLowerCase()
+        if (modules.includes(arg)) {
+            editModule(message.guild.id, arg, (moduleActivated(message.guild.id, arg) ? false : true))
+            return message.channel.send(":white_check_mark: Module \`" + arg + "\` now " + (moduleActivated(message.guild.id, arg) ? "enabled" : "disabled") + ".")
+        } else {
+            return message.channel.send(":x: Module does not exist.")
+        }
+    } else if (content.startsWith("c!subscribe")) {
+        let number = parseInt(message.content.split(" ").splice(1)[0])
+        if (!number) return message.channel.send(":x: Invalid count.")
+
+        if (!getCount(message.guild.id)[0]) return message.channel.send(":x: There is no counting channel set up in this guild.")
+        if (number <= getCount(message.guild.id)[0]) return message.channel.send(":warning: You can't subscribe to a count that's under the current count.")
+
+        subscribe(message.guild.id, message.author.id, number)
+        return message.channel.send(":white_check_mark: I will notify you when this server reach " + number + " total counts.")
+    } else if (content.startsWith("c!topic")) {
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
+        let topic = message.content.split(" ").splice(1).join(" ");
+        setTopic(message.guild.id, topic);
+        if (topic.length == 0) return message.channel.send(":white_check_mark: The topic has been cleared.")
+        return message.channel.send(":white_check_mark: The topic has been updated.")
     }
 })
 
@@ -96,6 +130,73 @@ function resetCount(guildid) {
     file[guildid].user = "0";
 
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+}
+
+function editModule(guildid, moduleStr, value) { // module is already something in js
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
+    if (!file[guildid]) file[guildid] = {}
+    if (!file[guildid].modules) file[guildid].modules = {};
+
+    file[guildid].modules[moduleStr] = value == true ? true : undefined;
+
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+}
+
+function moduleActivated(guildid, moduleStr) {
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
+    if (!file[guildid]) file[guildid] = {}
+    if (!file[guildid].modules) file[guildid].modules = {};
+
+    return file[guildid].modules[moduleStr]
+}
+
+function subscribe(guildid, userid, number) {
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
+    if (!file[guildid]) file[guildid] = {}
+    if (!file[guildid].subscriptions) file[guildid].subscriptions = {};
+    if (!file[guildid].subscriptions[userid]) file[guildid].subscriptions[userid] = [];
+
+    file[guildid].subscriptions[userid].push(number)
+
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+}
+
+function checkSubscribed(guildid, count, countUser) {
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
+    if (!file[guildid]) file[guildid] = {}
+    if (!file[guildid].subscriptions) file[guildid].subscriptions = {};
+
+    for (let user in file[guildid].subscriptions) {
+        file[guildid].subscriptions[user].forEach(number => {
+            if (count == number) {
+                file[guildid].subscriptions[user].splice(file[guildid].subscriptions[user].indexOf(number), 1); // remove the number from the subscriptions
+
+                let guild = client.guilds.get(guildid)
+                let member = guild.members.get(user)
+                
+                member.send("The guild " + guild.name + " just reached " + number + " total counts! :tada:\nThe user who sent it was <@" + countUser + ">")
+            }
+        })
+    }
+
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+}
+
+function setTopic(guildid, topic) {
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
+    if (!file[guildid]) file[guildid] = {}
+
+    file[guildid].topic = topic;
+
+    fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+}
+
+function getTopic(guildid) {
+    let file = JSON.parse(fs.readFileSync('./_guilds.json'))
+    if (!file[guildid]) file[guildid] = {}
+    if (!file[guildid].topic) file[guildid].topic = "";
+
+    return file[guildid].topic;
 }
 
 client.login(require("./_TOKEN.js").TOKEN)
