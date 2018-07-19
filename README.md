@@ -23,6 +23,22 @@ There are different purposes:
 - Or just have fun while counting to infinity.
 
 ** **
+<big>Commands & Modules</big>
+
+| Command & Usage       | Description                                           | Permission     |
+|:----------------------|:------------------------------------------------------|:---------------|
+| `c!channel`           | Set the channel to the guild's counting channel.      | `MANAGE_GUILD` |
+| `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
+| `c!info`              | Get information about the bot                         |
+| `c!toggle [module]`   | Toggle modules. Leave empty to get a list of modules. | `MANAGE_GUILD` |
+| `c!subscribe [count]` | Subscribe to a count in the guild.                    |
+| `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
+
+| Module    | Description                                                     |
+|:----------|:----------------------------------------------------------------|
+| `talking` | Allow users to send a message after the count. Ex. `20 blabla`. |
+
+** **
 <big>Moving count from another bot</big>
 
 We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to check it out.
