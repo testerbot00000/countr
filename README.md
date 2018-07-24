@@ -25,7 +25,7 @@ There are different purposes:
 ** **
 <big>Commands</big>
 
-| Command & Usage       | Description                                           | Permissions^1^  |
+| Command & Usage       | Description                                           | Permissions    |
 |:----------------------|:------------------------------------------------------|:---------------|
 | `c!channel`           | Set the channel to the guild's counting channel.      | `MANAGE_GUILD` |
 | `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
@@ -34,17 +34,15 @@ There are different purposes:
 | `c!subscribe [count]` | Subscribe to a count in the guild.                    |
 | `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
 
-^1^ Permissions the user require for the command to work.
-
 ** **
 <big>Modules</big>
 
-| Module      | Description                                                                          | Bot Permissions^1^ |
-|:------------|:-------------------------------------------------------------------------------------|:-------------------|
+| Module      | Description                                                                          | Bot Permissions |
+|:------------|:-------------------------------------------------------------------------------------|:----------------|
 | `talking`   | Allow users to send a message after the count. Ex. `20 blabla`.                      |
-| `replacing` | Make the bot replace the message, preventing the user to edit or delete the message. | `EMBED_LINKS`      |
+| `replacing` | Make the bot replace the message, preventing the user to edit or delete the message. | `EMBED_LINKS`   |
 
-^1^ Default perimssions apply but these are other permissions the bot needs to make the module function correctly.
+The *Bot Permissions* column shows what permissions the bot requires excluding the default ones. The default bot permissions are shown below.
 
 ** **
 <big>Permissions</big>
