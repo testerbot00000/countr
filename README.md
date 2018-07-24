@@ -23,9 +23,9 @@ There are different purposes:
 - Or just have fun while counting to infinity.
 
 ** **
-<big>Commands & Modules</big>
+<big>Commands</big>
 
-| Command & Usage       | Description                                           | Permission     |
+| Command & Usage       | Description                                           | Permissions^1^  |
 |:----------------------|:------------------------------------------------------|:---------------|
 | `c!channel`           | Set the channel to the guild's counting channel.      | `MANAGE_GUILD` |
 | `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
@@ -34,15 +34,17 @@ There are different purposes:
 | `c!subscribe [count]` | Subscribe to a count in the guild.                    |
 | `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
 
-| Module    | Description                                                     |
-|:----------|:----------------------------------------------------------------|
-| `talking` | Allow users to send a message after the count. Ex. `20 blabla`. |
+^1^ Permissions the user require for the command to work.
 
 ** **
-<big>Moving count from another bot</big>
+<big>Modules</big>
 
-We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to check it out.
-Note: Faking counts to get a higher count is not allowed.
+| Module      | Description                                                                          | Bot Permissions^1^ |
+|:------------|:-------------------------------------------------------------------------------------|:-------------------|
+| `talking`   | Allow users to send a message after the count. Ex. `20 blabla`.                      |
+| `replacing` | Make the bot replace the message, preventing the user to edit or delete the message. | `EMBED_LINKS`      |
+
+^1^ Default perimssions apply but these are other permissions the bot needs to make the module function correctly.
 
 ** **
 <big>Permissions</big>
@@ -58,6 +60,12 @@ If you're super pecky about giving bots permissions, read this:
 	- If a message is not part of the counting or not the next number in the counting, it deletes it.
 
 If you want to, you can make these permissions only work in the counting channel. 
+
+** **
+<big>Moving count from another bot</big>
+
+We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to check it out.
+Note: Faking counts to get a higher count is not allowed.
 
 ** **
 <big>Contributors</big>
