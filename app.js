@@ -5,7 +5,7 @@ const DBL = require('dblapi.js');
 const client = new Discord.Client({ disableEveryone: true })
 const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
 
-const modules = [ "talking", "replacing" ]
+const modules = [ "talking", "reposting" ]
 
 client.on('ready', () => {
     console.log("Ready!")
@@ -41,7 +41,7 @@ client.on('message', message => {
         addToCount(message.guild.id, message.author.id); count += 1;
         checkSubscribed(message.guild.id, count, user);
         message.channel.setTopic((getTopic(message.guild.id) == "" ? "" : getTopic(message.guild.id) + " | ") + "**Next count: **" + (count + 1));
-        if (moduleActivated(message.guild.id, "replacing")) {
+        if (moduleActivated(message.guild.id, "reposting")) {
             message.channel.send({
                 embed: {
                     description: "<@!" + message.author.id + ">: " + message.content,
