@@ -40,7 +40,7 @@ There are different purposes:
 | Module      | Description                                                                          | Bot Permissions |
 |:------------|:-------------------------------------------------------------------------------------|:----------------|
 | `talking`   | Allow users to send a message after the count. Ex. `20 blabla`.                      |
-| `replacing` | Make the bot replace the message, preventing the user to edit or delete the message. | `EMBED_LINKS`   |
+| `reposting` | Make the bot repost the message, preventing the user to edit or delete the message.  | `EMBED_LINKS`   |
 
 The *Bot Permissions* column shows what permissions the bot requires excluding the default ones. The default bot permissions are shown below.
 
