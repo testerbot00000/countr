@@ -3,7 +3,7 @@
   
 [![Discord Bots](https://discordbots.org/api/widget/status/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/servers/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/upvotes/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/lib/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/owner/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682)
 
-[![Discord Bots](https://discordbots.org/api/widget/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) ** ** [![Listcord](https://nuggetbot.com/listcord/embed.png?id=467377486141980682)](https://listcord.com/bot/467377486141980682)
+[![Discord Bots](https://discordbots.org/api/widget/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Listcord](https://nuggetbot.com/listcord/embed.png?id=467377486141980682)](https://listcord.com/bot/467377486141980682)
 
 </div>
 
