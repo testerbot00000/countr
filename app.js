@@ -1,26 +1,32 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const DBL = require('dblapi.js');
+const Listcord = require('listcord');
 
 const client = new Discord.Client({ disableEveryone: true })
 const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
+const listcord = new Listcord.Client(require('./_TOKEN.js').LISTCORD_TOKEN)
 
 const modules = [ "talking", "reposting" ]
 
 client.on('ready', () => {
     console.log("Ready!")
 
-    client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
+    client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
     
     setInterval(() => {
-        client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts)", { type: "WATCHING" })
+        client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
     }, 60000)
 
-    dbl.postStats(client.guilds.size, client.shard.id, client.shard.count);
-    setInterval(() => {
-        dbl.postStats(client.guilds.size, client.shard.id, client.shard.count);
-    }, 1800000)
+    postStats(client)
+    setInterval(() => { postStats(client) }, 900000)
 })
+
+async function postStats(client) {
+    dbl.postStats(client.guilds.size, client.shard.id, client.shard.count).then().catch(console.log);
+    const counts = await client.shard.broadcastEval('this.guilds.size')
+    listcord.postStats(client.user.id, counts.reduce((prev, val) => prev + val, 0), client.shard.count).then().catch(console.log);
+}
 
 client.on('message', message => {
     let content = message.content.toLowerCase();
@@ -66,7 +72,7 @@ client.on('message', message => {
         let channel = message.guild.channels.get(getCountingChannel(message.guild.id));
         if (channel) channel.setTopic("**Next count: **1");
         return message.channel.send(":white_check_mark: Counting has been reset.");
-    } else if (content.startsWith("c!info")) {
+    } else if (content.startsWith("c!info") || content.startsWith("c!help")) {
         return message.channel.send("**Please go to our Discordbots.org-page to read more about the bot: **https://discordbots.org/bot/467377486141980682")
     } else if (content.startsWith("c!toggle")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
