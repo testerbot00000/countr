@@ -28,7 +28,7 @@ There are different purposes:
 |:----------------------|:------------------------------------------------------|:---------------|
 | `c!channel`           | Set the channel to the guild's counting channel.      | `MANAGE_GUILD` |
 | `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
-| `c!info`              | Get information about the bot                         |
+| `c!info` or `c!help`  | Get information about the bot                         |
 | `c!toggle [module]`   | Toggle modules. Leave empty to get a list of modules. | `MANAGE_GUILD` |
 | `c!subscribe [count]` | Subscribe to a count in the guild.                    |
 | `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
