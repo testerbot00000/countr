@@ -80,7 +80,6 @@ Since we can change our names on Discord whenever we want, you can find us on th
 To support us free, please vote on our bot at these bot sites:
 - [DiscordBots.org](https://discordbots.org/bot/467377486141980682) (main bot site)
 - [Listcord.com](https://listcord.com/bot/467377486141980682)
-- [Boatlist.ml](https://boatlist.ml/bot/467377486141980682)
 
 I don't like money donations, but a vote would mean a lot :)
 
