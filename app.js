@@ -62,9 +62,9 @@ client.on('message', message => {
     if (message.author.bot) return;
 
     if (content.startsWith("c!channel")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
-        saveCountingChannel(message.guild.id, message.channel.id)
-        return message.channel.send(":white_check_mark: From now on, this channel will be used for counting.");
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!");
+        if (content.endsWith("none")) { saveCountingChannel(message.guild.id, "0"); message.channel.send(":white_check_mark: Unlinked counting channel."); }
+        else { saveCountingChannel(message.guild.id, message.channel.id); message.channel.send(":white_check_mark: From now on, this channel will be used for counting."); }
     } else if (content.startsWith("c!reset")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
         resetCount(message.guild.id);
