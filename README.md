@@ -55,10 +55,11 @@ If you're super pecky about giving bots permissions, read this:
 	- Another basic permission. It requires to respond to the commands.
 - Manage Channels
 	- The topic of the channel is used to display the next number.
+	- If you're going to restrict the bot's permissions to only work in the channel, you also need to give Countr "Manage Channels" in the category the channel is in. If it's not in a category, it's fine. (Bug report: https://github.com/discordjs/discord.js/issues/2533) 
 - Manage Messages
 	- If a message is not part of the counting or not the next number in the counting, it deletes it.
 
-If you want to, you can make these permissions only work in the counting channel. 
+If you want to, you can make these permissions only work in the counting channel.
 
 ** **
 <big>Moving count from another bot</big>
