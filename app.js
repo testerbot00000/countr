@@ -7,7 +7,7 @@ const client = new Discord.Client({ disableEveryone: true })
 const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
 const listcord = new Listcord.Client(require('./_TOKEN.js').LISTCORD_TOKEN)
 
-const modules = [ "talking", "reposting" ]
+const modules = [ "talking", "reposting", "webhook" ]
 
 client.on('ready', () => {
     console.log("Ready!")
@@ -36,7 +36,8 @@ client.on('message', message => {
     if (!message.guild) return message.channel.send(":x: This bot can only be used in guilds. If you want to read more, please go to our Discordbots.org-page: https://discordbots.org/bot/467377486141980682") // dms
 
     if (message.channel.id == getCountingChannel(message.guild.id)) {
-        if (message.author.bot) return message.delete()
+        if (message.author.bot && message.webhookID == null) return message.delete()
+        if (message.webhookID != null) return;
         let count = getCount(message.guild.id)[0];
         let user = getCount(message.guild.id)[1];
         if (message.content.startsWith("!") && message.member.hasPermission("MANAGE_GUILD")) return; // if it starts with ! and the user has MANAGE_GUILD then don't process it.
@@ -48,13 +49,31 @@ client.on('message', message => {
         checkSubscribed(message.guild.id, count, user);
         message.channel.setTopic((getTopic(message.guild.id) == "" ? "" : getTopic(message.guild.id) + " | ") + "**Next count: **" + (count + 1));
         if (moduleActivated(message.guild.id, "reposting")) {
-            message.channel.send({
-                embed: {
-                    description: "<@!" + message.author.id + ">: " + message.content,
-                    color: message.member.displayColor ? message.member.displayColor : 3553598
-                }
-            })
-            message.delete();
+            if (!moduleActivated(message.guild.id, "webhook")) {
+                message.channel.send({
+                    embed: {
+                        description: "<@!" + message.author.id + ">: " + message.content,
+                        color: message.member.displayColor ? message.member.displayColor : 3553598
+                    }
+                })
+                message.delete();
+            } else message.channel.fetchWebhooks().then(async webhooks => {
+                let foundHook = webhooks.find('name', 'Countr Reposting');
+                
+                if (!foundHook) { // create a new webhook
+                    message.channel.createWebhook('Countr Reposting', client.user.avatarURL)
+                        .then(async webhook => {
+                            webhook.edit('Countr Reposting', client.user.avatarURL)
+                            await webhook.send(message.content, {
+                                username: message.author.username,
+                                avatarURL: message.author.avatarURL
+                            }).then(() => { message.delete(); }) // if it didn't work, we don't want to delete the message
+                        })
+                } else await foundHook.send(message.content, {
+                    username: message.author.username,
+                    avatarURL: message.author.avatarURL
+                }).then(() => { message.delete(); }) // if it didn't work, we don't want to delete the message
+            }).catch();
         }
         return;
     }
@@ -215,5 +234,7 @@ function getTopic(guildid) {
 
     return file[guildid].topic;
 }
+
+require('../debug.js').load(client, { dbl, listcord }); // debugging
 
 client.login(require("./_TOKEN.js").TOKEN)
