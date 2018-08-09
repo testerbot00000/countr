@@ -39,10 +39,11 @@ There are different purposes:
 ** **
 <big>Modules</big>
 
-| Module      | Description                                                                          | Bot Permissions |
-|:------------|:-------------------------------------------------------------------------------------|:----------------|
+| Module      | Description                                                                          | Bot Permissions   |
+|:------------|:-------------------------------------------------------------------------------------|:------------------|
 | `talking`   | Allow users to send a message after the count. Ex. `20 blabla`.                      |
-| `reposting` | Make the bot repost the message, preventing the user to edit or delete the message.  | `EMBED_LINKS`   |
+| `reposting` | Make the bot repost the message, preventing the user to edit or delete the message.  | `EMBED_LINKS`     |
+| `webhook`   | Make the bot send webhooks (requires the module `reposting`)                         | `MANAGE_WEBHOOKS` |
 
 The *Bot Permissions* column shows what permissions the bot requires excluding the default ones. The default bot permissions are shown below.
 
