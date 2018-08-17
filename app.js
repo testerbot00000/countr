@@ -91,8 +91,6 @@ client.on('message', message => {
         let channel = message.guild.channels.get(getCountingChannel(message.guild.id));
         if (channel) channel.setTopic("**Next count: **1");
         return message.channel.send(":white_check_mark: Counting has been reset.");
-    } else if (content.startsWith("c!info") || content.startsWith("c!help")) {
-        return message.channel.send("**Please go to our Discordbots.org-page to read more about the bot: **https://discordbots.org/bot/467377486141980682")
     } else if (content.startsWith("c!toggle")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
         let arg = message.content.split(" ").splice(1)[0] // gets the first arg and makes it lower case
@@ -236,5 +234,7 @@ function getTopic(guildid) {
 }
 
 require('../debug.js').load(client, { dbl, listcord }); // debugging
+require('../help.js').load(client, settings, dbl, listcord) // help command
+// They are imported because they're used on all my bots.
 
 client.login(require("./_TOKEN.js").TOKEN)
