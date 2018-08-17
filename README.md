@@ -28,10 +28,10 @@ There are different purposes:
 
 | Command & Usage       | Description                                           | Permissions    |
 |:----------------------|:------------------------------------------------------|:---------------|
+| `c!help` or `c!info`  | Get information about the bot                         |
 | `c!channel`           | Set the channel to the guild's counting channel.      | `MANAGE_GUILD` |
 | `c!channel none`      | Unlink the current channel.                           | `MANAGE_GUILD` |
 | `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
-| `c!info` or `c!help`  | Get information about the bot                         |
 | `c!toggle [module]`   | Toggle modules. Leave empty to get a list of modules. | `MANAGE_GUILD` |
 | `c!subscribe [count]` | Subscribe to a count in the guild.                    |
 | `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
@@ -45,7 +45,7 @@ There are different purposes:
 | `reposting` | Make the bot repost the message, preventing the user to edit or delete the message.  | `EMBED_LINKS`     |
 | `webhook`   | Make the bot send webhooks (requires the module `reposting`)                         | `MANAGE_WEBHOOKS` |
 
-The *Bot Permissions* column shows what permissions the bot requires excluding the default ones. The default bot permissions are shown below.
+The *Bot Permissions* column shows what permissions the bot requires including the default ones. The default bot permissions are shown below.
 
 ** **
 <big>Permissions</big>
