@@ -33,7 +33,7 @@ There are different purposes:
 | `c!channel none`      | Unlink the current channel.                           | `MANAGE_GUILD` |
 | `c!reset`             | Reset the count back to 0.                            | `MANAGE_GUILD` |
 | `c!toggle [module]`   | Toggle modules. Leave empty to get a list of modules. | `MANAGE_GUILD` |
-| `c!subscribe [count]` | Subscribe to a count in the guild.                    |
+| `c!subscribe <count>` | Subscribe to a count in the guild.                    |
 | `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
 
 ** **
