@@ -3,7 +3,7 @@
   
 [![Discord Bots](https://discordbots.org/api/widget/status/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/servers/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/upvotes/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/lib/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Discord Bots](https://discordbots.org/api/widget/owner/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682)
 
-[![Discord Bots](https://discordbots.org/api/widget/467377486141980682.svg)](https://discordbots.org/bot/467377486141980682) [![Listcord](https://nuggetbot.com/listcord/embed.png?id=467377486141980682&datacolor=35383d&backgroundcolor=23272a&accentcolor=2c2f33&offlinecolor=43b581&onlinecolor=43b581&bottomcolor=7289da&datatextcolor=bababa&keytextcolor=737375)](https://listcord.com/bot/467377486141980682)
+[![Discord Bots](https://discordbots.org/api/widget/467377486141980682.svg)](https://discordbots.org/bot/countr) [![Listcord](https://nuggetbot.com/listcord/embed.png?id=467377486141980682&datacolor=35383d&backgroundcolor=23272a&accentcolor=2c2f33&offlinecolor=43b581&onlinecolor=43b581&bottomcolor=7289da&datatextcolor=bababa&keytextcolor=737375)](https://listcord.com/bot/467377486141980682)
 
 </div>
 
@@ -81,7 +81,7 @@ Since we can change our names on Discord whenever we want, you can find us on th
 <big>Vote for us</big>
 
 To support us free, please vote on our bot at these bot sites:
-- [DiscordBots.org](https://discordbots.org/bot/467377486141980682) (main bot site)
+- [DiscordBots.org](https://discordbots.org/bot/countr) (main bot site)
 - [Listcord.com](https://listcord.com/bot/467377486141980682)
 
 I don't like money donations, but a vote would mean a lot :)
