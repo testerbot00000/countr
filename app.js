@@ -29,12 +29,13 @@ async function postStats(client) {
     listcord.postStats(client.user.id, counts.reduce((prev, val) => prev + val, 0), client.shard.count).then().catch(console.log);
 }
 
-client.on('message', message => {
+client.on('message', async message => {
     let content = message.content.toLowerCase();
 
     if (message.author.id == client.user.id) return;
     
-    if (!message.guild) return message.channel.send(":x: This bot can only be used in guilds. If you want to read more, please go to our Discordbots.org-page: https://discordbots.org/bot/467377486141980682") // dms
+    if (!message.guild && !(content.startsWith("c!help") || content.startsWith("c!info"))) message.channel.send(":x: This bot can only be used in guilds. If you want to read more, please go to our Discordbots.org-page: https://discordbots.org/bot/467377486141980682") // dms
+    if (!message.guild) return; // if its in a DM, we don't want it to trigger any other command. If it's c!help or c!info, we don't want to send the info message above, but still not trigger any other command.
 
     if (message.channel.id == getCountingChannel(message.guild.id)) {
         if (message.author.bot && message.webhookID == null) return message.delete()
@@ -48,7 +49,6 @@ client.on('message', message => {
         if (!moduleActivated(message.guild.id, "talking") && message.content != (count + 1).toString()) return message.delete() // if the module "talking" isn't activated and there's some text after it, we delete it as well
         addToCount(message.guild.id, message.author.id); count += 1;
         checkSubscribed(message.guild.id, count, user);
-        message.channel.setTopic((getTopic(message.guild.id) == "" ? "" : getTopic(message.guild.id) + " | ") + "**Next count: **" + (count + 1));
         if (moduleActivated(message.guild.id, "reposting")) {
             if (!moduleActivated(message.guild.id, "webhook")) {
                 message.channel.send({
@@ -87,10 +87,8 @@ client.on('message', message => {
         else { saveCountingChannel(message.guild.id, message.channel.id); message.channel.send(":white_check_mark: From now on, this channel will be used for counting."); }
     } else if (content.startsWith("c!reset")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
-        resetCount(message.guild.id);
-
-        let channel = message.guild.channels.get(getCountingChannel(message.guild.id));
-        if (channel) channel.setTopic("**Next count: **1");
+        setCount(message.guild.id, 0);
+        
         return message.channel.send(":white_check_mark: Counting has been reset.");
     } else if (content.startsWith("c!toggle")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
@@ -120,6 +118,12 @@ client.on('message', message => {
         setTopic(message.guild.id, topic);
         if (topic.length == 0) return message.channel.send(":white_check_mark: The topic has been cleared.")
         return message.channel.send(":white_check_mark: The topic has been updated.")
+    } else if (content.startsWith("c!set")) {
+        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don\'t have permission!")
+        let count = parseInt(message.content.split(" ").splice(1)[0]) || -1;
+        if (count < 0) return message.channel.send(":x: Invalid count.");
+        setCount(message.guild.id, count)
+        return message.channel.send(":white_check_mark: Success! Count set to " + count + ".")
     }
 })
 
@@ -129,6 +133,8 @@ function saveCountingChannel(guildid, channelid) {
     file[guildid].channel = channelid;
 
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+
+    updateTopic(guildid)
 }
 
 function getCountingChannel(guildid) {
@@ -158,13 +164,15 @@ function getCount(guildid) {
     return [ file[guildid].count, file[guildid].user ];
 }
 
-function resetCount(guildid) {
+function setCount(guildid, count) {
     let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
-    file[guildid].count = 0;
-    file[guildid].user = "0";
+    file[guildid].count = count;
+    if (count == 0) file[guildid].user = "0";
 
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+
+    updateTopic(guildid)
 }
 
 function editModule(guildid, moduleStr, value) { // module is already something in js
@@ -224,6 +232,8 @@ function setTopic(guildid, topic) {
     file[guildid].topic = topic;
 
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
+
+    updateTopic(guildid)
 }
 
 function getTopic(guildid) {
@@ -232,6 +242,10 @@ function getTopic(guildid) {
     if (!file[guildid].topic) file[guildid].topic = "";
 
     return file[guildid].topic;
+}
+
+function updateTopic(guildid) {
+    try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic((getTopic(guildid) == "" ? "" : getTopic(guildid) + " | ") + "**Next count: **" + (getCount(guildid)[0] + 1)); } catch(e) {} // if the channel dows not exist or we don't have any permission, we don't want to throw an error
 }
 
 require('../debug.js').load(client, { dbl, listcord }); // debugging

@@ -41,6 +41,12 @@
             "args": "[topic]",
             "example": "topic Count to infinity!",
             "description": "Set the topic. Leave empty to clear topic."
+        },
+        {
+            "command": "set",
+            "args": "<count>",
+            "example": "set 1337",
+            "description": "Set the count to a specific count."
         }
     ],
     "contributors": [
