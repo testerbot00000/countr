@@ -35,6 +35,7 @@ There are different purposes:
 | `c!toggle [module]`   | Toggle modules. Leave empty to get a list of modules. | `MANAGE_GUILD` |
 | `c!subscribe <count>` | Subscribe to a count in the guild.                    |
 | `c!topic [topic]`     | Set the topic. Leave empty to clear topic.            | `MANAGE_GUILD` |
+| `c!set <count>`       | Set the count to a specific count                     | `MANAGE_GUILD` |
 
 ** **
 <big>Modules</big>
@@ -64,12 +65,6 @@ If you're super pecky about giving bots permissions, read this:
 If you want to, you can make these permissions only work in the counting channel.
 
 ** **
-<big>Moving count from another bot</big>
-
-We allow you to move counts from a previous bot to Countr. Just come to the support server and ask us to check it out.
-Note: Faking counts to get a higher count is not allowed.
-
-** **
 <big>Contributors</big>
 
 - `Main Developer and Designer` Promise - Gleeny (110090225929191424)
@@ -90,7 +85,8 @@ I don't like money donations, but a vote would mean a lot :)
 <big>Keep in mind!</big>
 
 - To avoid spam of the bot and the channel, you can only send a number after someone else has.
-- You can reset the counter with `c!reset`. This action is final.
+- You can reset the counter with `c!reset` and change the count with `c!set`.
+- If you want to bypass the deletion of a message, type `!` before the message. You can edit the message afterwards.
 - The only information we store in our systems are:
 	- The counting channel ID
 	- How many counts in that channel
