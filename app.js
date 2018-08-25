@@ -48,16 +48,17 @@ client.on('message', async message => {
         if (message.content.split(" ")[0] != (count + 1).toString()) return message.delete() // message.content.split(" ").splice(1)[0] = first word/number
         if (!moduleActivated(message.guild.id, "talking") && message.content != (count + 1).toString()) return message.delete() // if the module "talking" isn't activated and there's some text after it, we delete it as well
         addToCount(message.guild.id, message.author.id); count += 1;
-        checkSubscribed(message.guild.id, count, user);
+        let countMsg = message;
         if (moduleActivated(message.guild.id, "reposting")) {
             if (!moduleActivated(message.guild.id, "webhook")) {
-                message.channel.send({
+                countMsg = await message.channel.send({
                     embed: {
                         description: "<@!" + message.author.id + ">: " + message.content,
                         color: message.member.displayColor ? message.member.displayColor : 3553598
                     }
                 })
                 message.delete();
+                checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
             } else message.channel.fetchWebhooks().then(async webhooks => {
                 let foundHook = webhooks.find('name', 'Countr Reposting');
                 
@@ -65,17 +66,25 @@ client.on('message', async message => {
                     message.channel.createWebhook('Countr Reposting', client.user.avatarURL)
                         .then(async webhook => {
                             webhook.edit('Countr Reposting', client.user.avatarURL)
-                            await webhook.send(message.content, {
+                            countMsg = await webhook.send(message.content, {
                                 username: message.author.username,
                                 avatarURL: message.author.avatarURL
-                            }).then(() => { message.delete(); }) // if it didn't work, we don't want to delete the message
+                            })
+
+                            message.delete();
+                            checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
                         })
-                } else await foundHook.send(message.content, {
+                } else countMsg = await foundHook.send(message.content, {
                     username: message.author.username,
                     avatarURL: message.author.avatarURL
-                }).then(() => { message.delete(); }) // if it didn't work, we don't want to delete the message
+                })
+                
+                message.delete();
+                checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
+
             }).catch();
         }
+        
         return;
     }
 
@@ -152,8 +161,9 @@ function addToCount(guildid, userid) {
     file[guildid].user = userid;
 
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
-    
     fs.writeFileSync('./_counts.txt', parseInt(fs.readFileSync('./_counts.txt')) + 1)
+
+    updateTopic(guildid)
 }
 
 function getCount(guildid) {
@@ -204,7 +214,7 @@ function subscribe(guildid, userid, number) {
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
 }
 
-function checkSubscribed(guildid, count, countUser) {
+function checkSubscribed(guildid, count, countUser, messageID) {
     let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
     if (!file[guildid].subscriptions) file[guildid].subscriptions = {};
@@ -217,7 +227,7 @@ function checkSubscribed(guildid, count, countUser) {
                 let guild = client.guilds.get(guildid)
                 let member = guild.members.get(user)
                 
-                member.send("The guild " + guild.name + " just reached " + number + " total counts! :tada:\nThe user who sent it was <@" + countUser + ">")
+                member.send("The guild " + guild.name + " just reached " + number + " total counts! :tada:\nThe user who sent it was <@" + countUser + ">\n[<https://discordapp.com/channels/" + guildid + "/" + getCountingChannel(guildid) + "/" + messageID + ">]")
             }
         })
     }
