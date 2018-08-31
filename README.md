@@ -98,6 +98,7 @@ Any other questions can go to our [support server](https://discord.gg/JbHX5U3).
 ** **
 
 [![Discord Bots](https://discordbots.org/api/widget/467377486141980682.svg)](https://discordbots.org/bot/countr) Test 1
+Test 1 moar
 
 [![Discord Bots](https://discordbots.org/api/widget/472842075310653447.svg)](https://discordbots.org/bot/472842075310653447) Test 2
 
