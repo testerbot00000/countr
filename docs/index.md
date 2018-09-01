@@ -80,7 +80,7 @@ html = html + '</tbody></table>';
 document.getElementById("commands").innerHTML = html;
 
 // CONTRIBUTORS
-let html = '<ul>';
+html = '<ul>';
         
 function formatContributor(contributor, index) {
     html = html + '<li>' + contributor.role + ' ' + contributor.user + ' ' + contributor.userID + '</li>';
