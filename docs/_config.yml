@@ -18,7 +18,7 @@ email: "gleeny@cyberservices.com"
 description: >- # this means to ignore newlines until "baseurl:"
   My personal website for showing my projects and other miscellaneous.
 baseurl: "/Countr" # the subpath of your site, e.g. /blog
-#url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://gleeny.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: GleenyPromise
 github_username:  Gleeny
 
