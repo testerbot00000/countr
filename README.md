@@ -51,7 +51,7 @@
 | <code>c!topic [topic]</code>     | Set the topic. Leave empty to clear topic.            | <code>MANAGE_GUILD</code> |
 | <code>c!set &lt;count&gt;</code>       | Set the count to a specific count                     | <code>MANAGE_GUILD</code> |</p>
 
-<table style="width:100%">
+<table style="background-color:rgba(0, 0, 0, 0) width:100%">
 	<tr>
 		<th>Command &amp; Usage</th>
 		<th>Description</th>
