@@ -79,7 +79,7 @@ document.getElementById("commands").innerHTML = html;
 html = '<ul>';
         
 function formatContributor(contributor, index) {
-    html = html + '<li>' + contributor.role + ' ' + contributor.user + ' ' + contributor.userID + '</li>';
+    html = html + '<li><code>' + contributor.role + '</code> ' + contributor.user + ' (' + contributor.userID + ')</li>';
 }
         
 settings.contributors.forEach(formatContributor);
