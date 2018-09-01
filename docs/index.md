@@ -7,9 +7,9 @@ let settings = {"commands":[{"command":"help","args":"","example":"","descriptio
 </script>
 
 <div align="center">
-<a href="http://discordbots.org/bot/Countr"><img src="https://discordbots.org/api/widget/status/467377486141980682.svg"><img src="https://discordbots.org/api/widget/servers/467377486141980682.svg"><img src="https://discordbots.org/api/widget/upvotes/467377486141980682.svg"><img src="https://discordbots.org/api/widget/lib/467377486141980682.svg"><img src="https://discordbots.org/api/widget/owner/467377486141980682.svg">
+<a href="http://discordbots.org/bot/Countr"><img src="https://discordbots.org/api/widget/status/467377486141980682.svg"><img src="https://discordbots.org/api/widget/servers/467377486141980682.svg"><img src="https://discordbots.org/api/widget/upvotes/467377486141980682.svg"><img src="https://discordbots.org/api/widget/lib/467377486141980682.svg"><img src="https://discordbots.org/api/widget/owner/467377486141980682.svg"></a>
         
-<p><img src="https://discordbots.org/api/widget/467377486141980682.svg"></a>
+<p><a href="http://discordbots.org/bot/Countr"><img src="https://discordbots.org/api/widget/467377486141980682.svg"></a>
 </div>
         
 <p><b>Countr</b> is a simple counting bot and can be set up in 3 simple steps, explained.<ol>
