@@ -1,4 +1,4 @@
-<p><div style="background:white url(https://i.imgur.com/QiCG7sd.png) repeat fixed;"></p>
+<div style="background:white url(https://i.imgur.com/QiCG7sd.png) repeat fixed;">
 
 <div align="center">
 
@@ -50,6 +50,19 @@
 | <code>c!subscribe &lt;count&gt;</code> | Subscribe to a count in the guild.                    |
 | <code>c!topic [topic]</code>     | Set the topic. Leave empty to clear topic.            | <code>MANAGE_GUILD</code> |
 | <code>c!set &lt;count&gt;</code>       | Set the count to a specific count                     | <code>MANAGE_GUILD</code> |</p>
+
+<table style="width:100%">
+	<tr>
+		<th>Command &amp; Usage</th>
+		<th>Description</th>
+		<th>Permission</th>
+	</tr>
+	<tr>
+		<td>Test</td>
+		<td>Test</td>
+		<td>Test</td>
+	</tr>
+</table>
 
 <hr />
 
