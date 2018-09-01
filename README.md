@@ -58,9 +58,44 @@
 		<th>Permission</th>
 	</tr>
 	<tr>
-		<td>Test</td>
-		<td>Test</td>
-		<td>Test</td>
+		<td><code>c!help</code> or <code>c!info</code></td>
+		<td>Get information about the bot</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><code>c!channel</code></td>
+		<td>Set the channel to the guild's counting channel.</td>
+		<td><code>MANAGE_GUILD</code></td>
+	</tr>
+	<tr>
+		<td><code>c!channel none</code></td>
+		<td>Unlink the current channel.</td>
+		<td><code>MANAGE_GUILD</code></td>
+	</tr>
+	<tr>
+		<td><code>c!reset</code></td>
+		<td>Reset the count back to 0.</td>
+		<td><code>MANAGE_GUILD</code></td>
+	</tr>
+	<tr>
+		<td><code>c!toggle [module]</code></td>
+		<td>Toggle modules. Leave empty to get a list of modules.</td>
+		<td><code>MANAGE_GUILD</code></td>
+	</tr>
+	<tr>
+		<td><code>c!subscribe &lt;count&gt;</code></td>
+		<td>Subscribe to a count in the guild.</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td><code>c!topic [topic]</code></td>
+		<td>Set the topic. Leave empty to clearr topic.</td>
+		<td><code>MANAGE_GUILD</code></td>
+	</tr>
+	<tr>
+		<td><code>c!set &lt;count&gt;</code></td>
+		<td>Set the count to a specific count.</td>
+		<td><code>MANAGE_GUILD</code></td>
 	</tr>
 </table>
 
