@@ -1,10 +1,8 @@
 ---
 layout: page
 ---
-
-<div align="center"><a href="http://discordbots.org/bot/Countr"><img src="https://discordbots.org/api/widget/status/467377486141980682.svg"><img src="https://discordbots.org/api/widget/servers/467377486141980682.svg"><img src="https://discordbots.org/api/widget/upvotes/467377486141980682.svg"><img src="https://discordbots.org/api/widget/lib/467377486141980682.svg"><img src="https://discordbots.org/api/widget/owner/467377486141980682.svg"></a></div>
         
-<p><div align="center"><a href="http://discordbots.org/bot/Countr"><img src="https://discordbots.org/api/widget/467377486141980682.svg"></a></div>
+<a href="http://discordbots.org/bot/Countr"><img src="https://discordbots.org/api/widget/467377486141980682.svg"></a>
         
 <p><b>Countr</b> is a simple counting bot and can be set up in 3 simple steps, explained.<ol>
     <li>Add the bot using <a href="https://discordapp.com/api/oauth2/authorize?client_id=467377486141980682&permissions=11280&scope=bot">this</a> link.</li>
