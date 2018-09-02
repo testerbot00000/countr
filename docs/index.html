@@ -61,32 +61,8 @@ That's it! To make it easier, we've made a simple bot tutorial on how to use the
 </ul>
 
 <script>
-function hitApi(url, callback) {
-  var req = new XMLHttpRequest();
-
-  req.addEventListener('load', onLoad);
-  req.addEventListener('error', onFail);
-  req.addEventListener('abort', onFail);
-
-  req.open('GET', url);
-  req.send();
-
-  function onLoad(event) {
-    if (req.status >= 400) {
-      onFail(event);
-    } else {
-      var json = JSON.parse(this.responseText);
-      callback(null, json);
-    }
-  }
-
-  function onFail(event) {
-    callback(new Error('...'));
-  }
-}
-
-let settings;
-await hitApi("https://raw.githubusercontent.com/Gleeny/Countr/master/settings.json", (error, data) => { if (!error) settings = data; })
+const jQuery = require("jquery");
+let settings = await jQuery.getJSON("https://raw.githubusercontent.com/Gleeny/Countr/master/settings.json");
 
 // COMMANDS
 let html = '<table><thead><tr><th style="text-align:left;">Command &amp; Usage</th><th style="text-align:left;">Description</th></tr></thead><tbody>';
