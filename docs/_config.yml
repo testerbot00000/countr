@@ -36,6 +36,14 @@ header_pages:
   - Voicr
   - Nevrevr
 
+pages: # custom
+  - title: Countr
+    link: /Countr
+  - title: Voicr
+    link: /Voicr
+  - title: Nevrevr
+    link: /Nevrevr
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
