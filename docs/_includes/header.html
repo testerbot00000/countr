@@ -2,7 +2,7 @@
   <div class="container">
     <a class="navbar-brand" rel="author" href="{{ site.home }}">{{ site.title | escape }}</a>
 
-    {%- assign pages = site.pages -%}
+    {%- assign pages = site.navpages -%}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
       <ul class="navbar-nav ml-auto">
         {%- for page in pages -%}
           <li class="nav-item">
-            <a class="nav-link" href="{{ page.url }}">{{ page.title }}</a>
+            <a class="nav-link" href="{{ page.link }}">{{ page.title }}</a>
           </li>
         {% endfor -%}
       </ul>

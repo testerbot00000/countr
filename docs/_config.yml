@@ -36,7 +36,7 @@ header_pages:
   - Voicr
   - Nevrevr
 
-pages: # custom
+navpages: # custom
   - title: Countr
     link: "https://gleeny.github.io/Countr"
   - title: Voicr
