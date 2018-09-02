@@ -61,7 +61,32 @@ That's it! To make it easier, we've made a simple bot tutorial on how to use the
 </ul>
 
 <script>
-let settings = {"commands":[{"command":"help","args":"","example":"","description":"Gives you this message."},{"command":"channel","args":"","example":"","description":"Set the channel to the guild's counting channel."},{"command":"channel none","args":"","example":"","description":"Unlink the current counting channel."},{"command":"reset","args":"","example":"","description":"Reset the count back to 0."},{"command":"toggle","args":"[module]","example":"toggle talking","description":"Toggle modules. Leave empty to get a list of modules."},{"command":"subscribe","args":"<count>","example":"subscribe 1000","description":"Subscribe to a count in the guild."},{"command":"topic","args":"[topic]","example":"topic Count to infinity!","description":"Set the topic. Leave empty to clear topic."},{"command":"set","args":"<count>","example":"set 1337","description":"Set the count to a specific count."}],"contributors":[{"user":"Promise","userID":"110090225929191424","role":"Main Developer and Designer"},{"user":"GamesForDays","userID":"332209233577771008","role":"Helper and Beta Tester"}],"prefix":"c!","embedColor":{"ok":4437377,"err":15746887,"warn":16426522}};
+function hitApi(url, callback) {
+  var req = new XMLHttpRequest();
+
+  req.addEventListener('load', onLoad);
+  req.addEventListener('error', onFail);
+  req.addEventListener('abort', onFail);
+
+  req.open('GET', url);
+  req.send();
+
+  function onLoad(event) {
+    if (req.status >= 400) {
+      onFail(event);
+    } else {
+      var json = JSON.parse(this.responseText);
+      callback(null, json);
+    }
+  }
+
+  function onFail(event) {
+    callback(new Error('...'));
+  }
+}
+
+let settings;
+await hitApi("https://raw.githubusercontent.com/Gleeny/Countr/master/settings.json", (error, data) => { if (!error) settings = data; })
 
 // COMMANDS
 let html = '<table><thead><tr><th style="text-align:left;">Command &amp; Usage</th><th style="text-align:left;">Description</th></tr></thead><tbody>';
