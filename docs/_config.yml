@@ -38,11 +38,11 @@ header_pages:
 
 pages: # custom
   - title: Countr
-    link: /Countr
+    link: "https://gleeny.github.io/Countr"
   - title: Voicr
-    link: /Voicr
+    link: "https://gleeny.github.io/Voicr"
   - title: Nevrevr
-    link: /Nevrevr
+    link: "https://gleeny.github.io/Nevrevr"
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
