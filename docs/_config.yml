@@ -31,7 +31,7 @@ plugins:
   - jekyll-sitemap
 
 # A list of the pages to display in the navigation bar
-header_pages:
+header_pages: # idk where its used
   - Countr
   - Voicr
   - Nevrevr
@@ -43,6 +43,10 @@ navpages: # custom
     link: "https://gleeny.github.io/Voicr"
   - title: Nevrevr
     link: "https://gleeny.github.io/Nevrevr"
+  - title: "Support Server"
+    link: "https://gleeny.page.link/discord"
+  - title: "GitHub"
+    link: "https://github.com/Gleeny"
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
