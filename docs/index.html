@@ -62,7 +62,7 @@ That's it! To make it easier, we've made a simple bot tutorial on how to use the
 
 <script>
 const jQuery = require("jquery");
-jQuery.getJSON("https://raw.githubusercontent.com/Gleeny/Countr/master/settings.json").then(settings => {
+jQuery.getJSON("https://raw.githubusercontent.com/Gleeny/Countr/master/settings.json", settings => {
   let html = '<table><thead><tr><th style="text-align:left;">Command &amp; Usage</th><th style="text-align:left;">Description</th></tr></thead><tbody>';
     
   function formatCommand(command, index) {
