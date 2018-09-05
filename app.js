@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const DBL = require('dblapi.js');
+const BLAPI = require("blapi")
 
 const client = new Discord.Client({ disableEveryone: true })
 const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
@@ -8,7 +9,7 @@ const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
 const settings = JSON.parse(fs.readFileSync('./settings.json'))
 const modules = [ "talking", "reposting", "webhook" ]
 
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log("Ready!")
 
     client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
@@ -17,13 +18,12 @@ client.on('ready', () => {
         client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
     }, 60000)
 
-    postStats(client)
-    setInterval(() => { postStats(client) }, 900000)
-})
+    let server_count = await client.shard.broadcastEval('this.guilds.size');
+    server_count = server_count.reduce((a, b) => a + b, 0);
 
-async function postStats(client) {
-    dbl.postStats(client.guilds.size, client.shard.id, client.shard.count).then().catch(console.log);
-}
+    // BLAPI.manualPost(server_count, client.user.id, require("./_TOKEN.js").BLAPI_TOKENS)
+    BLAPI.handle(client, require("./_TOKEN.js").BLAPI_TOKENS, 1)
+})
 
 client.on('message', async message => {
     let content = message.content.toLowerCase();
@@ -119,8 +119,12 @@ client.on('message', async message => {
         return message.channel.send(":white_check_mark: I will notify you when this server reach " + number + " total counts.")
     } else if (content.startsWith("c!topic")) {
         if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
-        let topic = message.content.split(" ").splice(1).join(" ");
-        setTopic(message.guild.id, topic);
+        let topic = message.content.split(" ").splice(1);
+        let override;
+
+        if (topic[0] == "-a") { topic = topic.splice(1).join(" "); override = true } else topic = topic.join(" ");
+
+        setTopic(message.guild.id, topic, override);
         if (topic.length == 0) return message.channel.send(":white_check_mark: The topic has been cleared.")
         return message.channel.send(":white_check_mark: The topic has been updated.")
     } else if (content.startsWith("c!set")) {
@@ -231,11 +235,12 @@ function checkSubscribed(guildid, count, countUser, messageID) {
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
 }
 
-function setTopic(guildid, topic) {
+function setTopic(guildid, topic, override = false) {
     let file = JSON.parse(fs.readFileSync('./_guilds.json'))
     if (!file[guildid]) file[guildid] = {}
 
     file[guildid].topic = topic;
+    if (override == true) file[guildid].topicOverride = true; else file[guildid].topicOverride = undefined;
 
     fs.writeFileSync('./_guilds.json', JSON.stringify(file))
 
@@ -247,11 +252,13 @@ function getTopic(guildid) {
     if (!file[guildid]) file[guildid] = {}
     if (!file[guildid].topic) file[guildid].topic = "";
 
-    return file[guildid].topic;
+    return { "topic": file[guildid].topic, "topicOverride": file[guildid].topicOverride };
 }
 
 function updateTopic(guildid) {
-    try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic((getTopic(guildid) == "" ? "" : getTopic(guildid) + " | ") + "**Next count: **" + (getCount(guildid)[0] + 1)); } catch(e) {} // if the channel dows not exist or we don't have any permission, we don't want to throw an error
+    let topic = getTopic(guildid);
+    if (!topic.topicOverride) try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic((topic.topic == "" ? "" : topic.topic + " | ") + "**Next count: **" + (getCount(guildid)[0] + 1)); } catch(e) {} // if the channel dows not exist or we don't have any permission, we don't want to throw an error
+    else if (topic.topic != "") try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic(topic.topic.replace("{{COUNT}}", (getCount(guildid)[0] + 1))); } catch(e) {} // if the channel dows not exist or we don't have any permission, we don't want to throw an error
 }
 
 require('../debug.js').load(client, { dbl }); // debugging
