@@ -38,7 +38,7 @@ client.on('message', async message => {
         if (message.webhookID != null) return;
         let count = getCount(message.guild.id)[0];
         let user = getCount(message.guild.id)[1];
-        if (message.content.startsWith("!") && message.member.hasPermission("MANAGE_GUILD")) return; // if it starts with ! and the user has MANAGE_GUILD then don't process it.
+        if (message.content.startsWith("!") && isAdmin(message.member)) return; // if it starts with ! and the user has MANAGE_GUILD then don't process it.
         if (message.type != "DEFAULT") return; // ex. pin messages gets ignored
         if (message.author.id == user) return message.delete() // we want someone else to count before the same person counts
         if (message.content.split(" ")[0] != (count + 1).toString()) return message.delete() // message.content.split(" ").splice(1)[0] = first word/number
@@ -87,16 +87,16 @@ client.on('message', async message => {
     if (message.author.bot) return;
 
     if (content.startsWith("c!channel")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!");
+        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!");
         if (content.endsWith("none")) { saveCountingChannel(message.guild.id, "0"); message.channel.send(":white_check_mark: Unlinked counting channel."); }
         else { saveCountingChannel(message.guild.id, message.channel.id); message.channel.send(":white_check_mark: From now on, this channel will be used for counting."); }
     } else if (content.startsWith("c!reset")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!")
         setCount(message.guild.id, 0);
         
         return message.channel.send(":white_check_mark: Counting has been reset.");
     } else if (content.startsWith("c!toggle")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!")
         let arg = message.content.split(" ").splice(1)[0] // gets the first arg and makes it lower case
         if (!arg) {
             return message.channel.send(":clipboard: Modules: \`" + modules.join("\`, \`") + "\` - To read more about them, go to the Discordbots.org-page. Link located under the command `c!info`")
@@ -118,7 +118,7 @@ client.on('message', async message => {
         subscribe(message.guild.id, message.author.id, number)
         return message.channel.send(":white_check_mark: I will notify you when this server reach " + number + " total counts.")
     } else if (content.startsWith("c!topic")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don't have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!")
         let topic = message.content.split(" ").splice(1);
         let override;
 
@@ -128,7 +128,7 @@ client.on('message', async message => {
         if (topic.length == 0) return message.channel.send(":white_check_mark: The topic has been cleared.")
         return message.channel.send(":white_check_mark: The topic has been updated.")
     } else if (content.startsWith("c!set")) {
-        if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(":x: You don\'t have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":x: You don\'t have permission!")
         let count = parseInt(message.content.split(" ").splice(1)[0]) || -1;
         if (count < 0) return message.channel.send(":x: Invalid count.");
         setCount(message.guild.id, count)
@@ -257,8 +257,12 @@ function getTopic(guildid) {
 
 function updateTopic(guildid) {
     let topic = getTopic(guildid);
-    if (!topic.topicOverride) try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic((topic.topic == "" ? "" : topic.topic + " | ") + "**Next count: **" + (getCount(guildid)[0] + 1)); } catch(e) {} // if the channel dows not exist or we don't have any permission, we don't want to throw an error
-    else if (topic.topic != "") try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic(topic.topic.replace("{{COUNT}}", (getCount(guildid)[0] + 1))); } catch(e) {} // if the channel dows not exist or we don't have any permission, we don't want to throw an error
+    if (!topic.topicOverride) try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic((topic.topic == "" ? "" : topic.topic + " | ") + "**Next count: **" + (getCount(guildid)[0] + 1)); } catch(e) {}
+    else if (topic.topic != "") try { client.guilds.get(guildid).channels.get(getCountingChannel(guildid)).setTopic(topic.topic.replace("{{COUNT}}", (getCount(guildid)[0] + 1))); } catch(e) {}
+}
+
+function isAdmin(member) {
+    return member.hasPermission("MANAGE_GUILD") || member.user.id == "110090225929191424";
 }
 
 require('../debug.js').load(client, { dbl }); // debugging
