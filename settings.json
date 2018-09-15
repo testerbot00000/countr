@@ -10,7 +10,7 @@
             "command": "channel",
             "args": "",
             "example": "",
-            "description": "Set the channel to the guild's counting channel."
+            "description": "Set the channel to the guild's counting channel. Note: Commands will be disabled in the counting channel."
         },
         {
             "command": "channel none",
