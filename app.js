@@ -7,7 +7,7 @@ const client = new Discord.Client({ disableEveryone: true })
 const dbl = new DBL(require('./_TOKEN.js').DBL_TOKEN, client)
 
 const settings = JSON.parse(fs.readFileSync('./settings.json'))
-const modules = [ "talking", "reposting", "webhook" ]
+const modules = [ "allow-spam", "talking", "reposting", "webhook" ]
 
 client.on('ready', async () => {
     console.log("Ready!")
@@ -40,7 +40,7 @@ client.on('message', async message => {
         let user = getCount(message.guild.id)[1];
         if (message.content.startsWith("!") && isAdmin(message.member)) return; // if it starts with ! and the user has MANAGE_GUILD then don't process it.
         if (message.type != "DEFAULT") return; // ex. pin messages gets ignored
-        if (message.author.id == user) return message.delete() // we want someone else to count before the same person counts
+        if (!moduleActivated(message.guild.id, "allow-spam") && message.author.id == user) return message.delete() // we want someone else to count before the same person counts
         if (message.content.split(" ")[0] != (count + 1).toString()) return message.delete() // message.content.split(" ").splice(1)[0] = first word/number
         if (!moduleActivated(message.guild.id, "talking") && message.content != (count + 1).toString()) return message.delete() // if the module "talking" isn't activated and there's some text after it, we delete it as well
         addToCount(message.guild.id, message.author.id); count += 1;
@@ -134,6 +134,8 @@ client.on('message', async message => {
         setCount(message.guild.id, count)
         return message.channel.send(":white_check_mark: Success! Count set to " + count + ".")
     }
+
+    if (await require("../global.js").command(client, settings, dbl, message)) return; // global help command onall my bots.
 })
 
 function saveCountingChannel(guildid, channelid) {
@@ -266,7 +268,6 @@ function isAdmin(member) {
 }
 
 require('../debug.js').load(client, { dbl }); // debugging
-require('../help.js').load(client, settings, dbl) // help command
 // They are imported because they're used on all my bots.
 
 client.login(require("./_TOKEN.js").TOKEN)
