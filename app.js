@@ -56,7 +56,7 @@ client.on('message', async message => {
                 message.delete();
                 checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
             } else message.channel.fetchWebhooks().then(async webhooks => {
-                let foundHook = webhooks.find('name', 'Countr Reposting');
+                let foundHook = webhooks.find(webhook => webhook.name == 'Countr Reposting')
                 
                 if (!foundHook) { // create a new webhook
                     message.channel.createWebhook('Countr Reposting', client.user.avatarURL)
