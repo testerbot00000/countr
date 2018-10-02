@@ -10,8 +10,6 @@ const settings = JSON.parse(fs.readFileSync('./settings.json'))
 const modules = [ "allow-spam", "talking", "reposting", "webhook" ]
 
 client.on('ready', async () => {
-    console.log("Ready!")
-
     client.user.setActivity("c!info (" + fs.readFileSync('./_counts.txt') + " global counts) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
     
     setInterval(() => {
