@@ -55,6 +55,28 @@
             "description": "Set the count to a specific count."
         }
     ],
+    "modules": [
+        {
+            "module": "allow-spam",
+            "description": "This allows members to count more than once in a row, without someone else typing between.",
+            "permissions": []
+        },
+        {
+            "module": "talking",
+            "description": "This allows members to talk after the count, ex. '1337 hello Admin!'",
+            "permissions": []
+        },
+        {
+            "module": "reposting",
+            "description": "This makes the bot repost the message, preventing the user to edit or delete the count afterwards.",
+            "permissions": []
+        },
+        {
+            "module": "webhook",
+            "description": "This makes the reposted message be a webhook. (Requires the 'reposting'-module)",
+            "permissions": ["MANAGE_WEBHOOKS"]
+        }
+    ],
     "contributors": [
         {
             "user": "Promise",
