@@ -44,9 +44,9 @@
         },
         {
             "command": "topic",
-            "args": "[-a] [topic]",
-            "example": "topic Count to infinity!",
-            "description": "Set the topic. Leave empty to clear topic. -a allows you to set the whole topic to your likings, including 'Next count:'. Use {{COUNT}} for the next count."
+            "args": "[topic]",
+            "example": "topic Count to infinity! Next count is {{COUNT}}!",
+            "description": "Set the topic. Leave empty to clear topic. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
         },
         {
             "command": "set",
