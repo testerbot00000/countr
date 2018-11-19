@@ -3,57 +3,53 @@
         {
             "command": "help",
             "args": "[-dm]",
-            "example": "help -dm",
             "description": "Gives you information about the bot. If you use '-dm', it sends to you in DMs."
         },
         {
             "command": "ping",
             "args": "",
-            "example": "",
             "description": "Gives you the bot's ping."
         },
         {
-            "command": "channel",
-            "args": "",
-            "example": "",
-            "description": "Set the channel to the guild's counting channel. Note: Commands will be disabled in the counting channel."
+            "command": "link",
+            "args": "[channel name, mention or ID]",
+            "description": "Set the channel to the guild's counting channel. Leave empty to use the current channel. Note: Commands will be disabled in the counting channel."
         },
         {
-            "command": "channel none",
+            "command": "unlink",
             "args": "",
-            "example": "",
             "description": "Unlink the current counting channel."
         },
         {
             "command": "reset",
             "args": "",
-            "example": "",
             "description": "Reset the count back to 0."
         },
         {
             "command": "toggle",
             "args": "[module]",
-            "example": "toggle talking",
             "description": "Toggle modules. Leave empty to get a list of modules."
         },
         {
             "command": "subscribe",
             "args": "<count>",
-            "example": "subscribe 1000",
             "description": "Subscribe to a count in the guild."
         },
         {
             "command": "topic",
             "args": "[topic]",
-            "example": "topic Count to infinity! Next count is {{COUNT}}!",
-            "description": "Set the topic. Leave empty to clear topic. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
+            "description": "Set the topic. Leave empty to clear topic. Set to 'disable' to disable it completely. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
         },
         {
             "command": "set",
             "args": "<count>",
-            "example": "set 1337",
             "description": "Set the count to a specific count."
-        }
+        },
+		    {
+            "command": "role",
+            "args": "<mode: each|only> <count> <duration: permanent:temporary> <role name, mention or ID>",
+            "description": "Set up a prize so people can get prizes when they count. Note: Give Countr the Manage Roles-permission and have the Countr-role over the role(s) you want to be rewarded."
+		    }
     ],
     "modules": [
         {

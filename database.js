@@ -17,8 +17,17 @@ const subscribeSchema = mongoose.Schema({
   count: Number
 }, { minimize: false })
 
+const roleSchema = mongoose.Schema({
+    guildid: String,
+    mode: String,
+    count: Number,
+    duration: String,
+    roleid: String
+}, { minimize: false })
+
 const Guild = mongoose.model("Guild", guildSchema);
 const Subscribe = mongoose.model("Subscribe", subscribeSchema);
+const Role = mongoose.model("Role", roleSchema)
 
 module.exports = function(client) { return {
     saveCountingChannel(guildid, channelid) {
@@ -124,7 +133,7 @@ module.exports = function(client) { return {
     setTopic(guildid, topic) {
         return new Promise(async function(resolve, reject) {
             let guild = await getGuild(guildid);
-            guild.topic = topic + (topic.includes("{{COUNT}}") ? "" : (topic == "" ? "" : " | ") + "**Next count:** {{COUNT}}")
+            if (["disable", ""].includes(guild.topic)) guild.topic = topic; else guild.topic = topic + (topic.includes("{{COUNT}}") ? "" : (topic == "" ? "" : " | ") + "**Next count:** {{COUNT}}")
             await guild.save().then(resolve).catch(reject);
             updateTopic(guildid, client)
         })
@@ -145,6 +154,43 @@ module.exports = function(client) { return {
                 return resolve(count);
             })
         })
+    },
+    setRole(guildid, mode, count, duration, roleid) {
+        return new Promise(async function(resolve, reject) {
+            Role.findOne({
+                guildid: guildid,
+                roleid: roleid
+            }, (err, role) => {
+                if (err) return reject(err);
+                if (!role) role = new Role({
+                    guildid: guildid,
+                    roleid: roleid
+                })
+
+                role.mode = mode;
+                role.count = count;
+                role.duration = duration;
+                role.save().then(resolve).catch(reject);
+            })
+
+        })
+    },
+    checkRole(guildid, count, userid) {
+        return new Promise(async function(resolve, reject) {
+            Role.find({
+                guildid: guildid
+            }, async (err, roles) => {
+                if (err) return reject(err);
+                roles.forEach(roleInfo => {
+                    if ((roleInfo.mode == "each" && Number.isInteger(count / roleInfo.count)) || (roleInfo.mode == "once" && count == roleInfo.count)) {
+                        try {
+                            if (roleInfo.duration == "temporary") client.guilds.get(guildid).roles.find(r => r.id == roleInfo.roleid).members.filter(m => m.id != userid).forEach(member => { member.removeRole(client.guilds.get(guildid).roles.find(r => r.id == roleInfo.roleid), "Countr Role") })
+                            client.guilds.get(guildid).members.get(userid).addRole(client.guilds.get(guildid).roles.find(r => r.id == roleInfo.roleid), "Countr Role")
+                        } catch(e) {}
+                    }
+                })
+            })
+        })
     }
 }}
 
@@ -162,7 +208,8 @@ function getGuild(guildid) {
                     user: "",
                     modules: [],
                     subscriptions: {},
-                    topic: ""
+                    topic: "",
+                    role: {}
                 })
 
                 return resolve(newGuild);
@@ -174,7 +221,10 @@ function getGuild(guildid) {
 function updateTopic(guildid, client) {
     return new Promise(async function(resolve, reject) {
         let guild = await getGuild(guildid);
-        try { await client.guilds.get(guildid).channels.get(guild.channel).setTopic(guild.topic.replace("{{COUNT}}", guild.count + 1)) } catch(e) {}
+        try {
+            if (guild.topic == "") await client.guilds.get(guildid).channels.get(guild.channel).setTopic("**Next count:** " + (guild.count + 1))
+            else if (guild.topic != "disable") await client.guilds.get(guildid).channels.get(guild.channel).setTopic(guild.topic.replace("{{COUNT}}", (guild.count + 1)))
+        } catch(e) {}
         resolve(true);
     })
 }

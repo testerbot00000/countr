@@ -5,7 +5,7 @@ const BLAPI = require("blapi");
 
 const settings = JSON.parse(fs.readFileSync('./settings.json'))
 const config = JSON.parse(fs.readFileSync('./config.json'))
-const globalCode = require("require-from-url/sync")("https://gleeny.github.io/files/global-bot.js"); // includes commands that are not part of the bot concept, ex. ping, help, eval. Also includes advanced logging.
+const globalCode = require("require-from-url/sync")("https://promise.js.org/files/global-bot.js"); // includes commands that are not part of the bot concept, ex. ping, help, eval. Also includes advanced logging.
 
 const client = new Discord.Client({ disableEveryone: true })
 const dbl = new DBL(config.blapiKeys["discordbots.org"], client)
@@ -70,7 +70,7 @@ client.on('message', async message => {
                             webhook.edit('Countr Reposting', client.user.avatarURL)
                             countMsg = await webhook.send(message.content, {
                                 username: message.author.username,
-                                avatarURL: message.author.displayAvatarURL
+                                avatarURL: message.author.displayAvatarURL.split("?")[0]
                             })
 
                             message.delete()
@@ -78,11 +78,12 @@ client.on('message', async message => {
                         })
                 } else countMsg = await foundHook.send(message.content, {
                     username: message.author.username,
-                    avatarURL: message.author.displayAvatarURL
+                    avatarURL: message.author.displayAvatarURL.split("?")[0]
                 })
                 
                 message.delete()
                 database.checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
+                database.checkRole(message.guild.id, count, message.author.id)
 
             }).catch();
         }
@@ -92,27 +93,44 @@ client.on('message', async message => {
 
     if (message.author.bot) return;
 
-    if (content.startsWith("c!channel")) {
-        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!");
-        if (content.endsWith("none")) { database.saveCountingChannel(message.guild.id, "0"); message.channel.send(":white_check_mark: Unlinked counting channel."); }
-        else { database.saveCountingChannel(message.guild.id, message.channel.id); message.channel.send(":white_check_mark: From now on, this channel will be used for counting."); }
+    if (content.startsWith("c!link")) {
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
+
+        let channel = message.guild.channels.find(c => c.name == message.content.split(" ").splice(1).join(" "))
+        if (message.content.split(" ").splice(1).join(" ").length < 1) channel = message.channel
+        if (!channel) channel = message.guild.channels.get(message.content.split(" ").splice(1).join(" "))
+        if (!channel) channel = message.guild.channels.get(message.content.split(" ").splice(1).join(" ").replace("<#", "").replace(">", ""))
+        if (!channel) return message.channel.send(":x: Invalid channel.")
+        if (channel.type != "text") return message.channel.send(":x: Invalid channel type.")
+
+        let botMsg = await message.channel.send(":hotsprings: Linking...")
+        return database.saveCountingChannel(message.guild.id, channel.id)
+            .then(() => { botMsg.edit(":white_check_mark: From now on, " + (channel.id == message.channel.id ? "this channel" : channel.toString()) + " will be used for counting.") })
+            .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
+    } else if (content.startsWith("c!unlink")) {
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
+        let botMsg = await message.channel.send(":hotsprings: Unlnking...")
+        return database.saveCountingChannel(message.guild.id, "0")
+            .then(() => { botMsg.edit(":white_check_mark: Unlinked the counting channel.") })
+            .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
     } else if (content.startsWith("c!reset")) {
-        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!")
-        database.setCount(message.guild.id, 0);
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
         
-        return message.channel.send(":white_check_mark: Counting has been reset.");
+        let botMsg = await message.channel.send(":hotsprings: Resetting...")
+        return database.setCount(message.guild.id, 0)
+            .then(() => { botMsg.edit(":white_check_mark: Counting has been reset.") })
+            .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
     } else if (content.startsWith("c!toggle")) {
-        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
         let arg = message.content.split(" ").splice(1)[0] // gets the first arg and makes it lower case
-        if (!arg) {
-            return message.channel.send(":clipboard: Modules: \`" + allModules.join("\`, \`") + "\` - To read more about them, go to the documentation page, `c!info` for link")
-        }
+        if (!arg) return message.channel.send(":clipboard: Modules: \`" + allModules.join("\`, \`") + "\` - To read more about them, go to the documentation page, `c!info` for link")
         arg = arg.toLowerCase()
         let modules = await database.getModules(message.guild.id);
         if (allModules.includes(arg)) {
+            let botMsg = await message.channel.send(":hotsprings: " + (modules.includes(arg) ? "Disabling" : "Enabling") + "...")
             return database.toggleModule(message.guild.id, arg)
-              .then(() => { message.channel.send(":white_check_mark: Module \`" + arg + "\` now " + (!modules.includes(arg) ? "enabled" : "disabled") + ".") })
-              .catch(() => { message.channel.send(":x: Something went wrong while trying to save to the database.") });
+              .then(() => { botMsg.edit(":white_check_mark: Module \`" + arg + "\` is now " + (modules.includes(arg) ? "disabled" : "enabled") + ".") })
+              .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
         } else {
             return message.channel.send(":x: Module does not exist.")
         }
@@ -120,36 +138,58 @@ client.on('message', async message => {
         let number = parseInt(message.content.split(" ").splice(1)[0])
         if (!number) return message.channel.send(":x: Invalid count.")
 
-        if (!database.getCount(message.guild.id)[0]) return message.channel.send(":x: There is no counting channel set up in this guild.")
-        if (number <= database.getCount(message.guild.id)[0]) return message.channel.send(":warning: You can't subscribe to a count that's under the current count.")
+        let count = await database.getCount(message.guild.id);
+        if (number <= count.count) return message.channel.send(":warning: You can't subscribe to a count that's under the current count.")
 
-        database.subscribe(message.guild.id, message.author.id, number)
-        return message.channel.send(":white_check_mark: I will notify you when this server reach " + number + " total counts.")
+        let botMsg = await message.channel.send(":hotsprings: Subscribing...")
+        return database.subscribe(message.guild.id, message.author.id, number)
+            .then(() => { botMsg.edit(":white_check_mark: I will notify you when this server reach " + number + " total counts.") })
+            .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
     } else if (content.startsWith("c!topic")) {
-        if (!isAdmin(message.member)) return message.channel.send(":x: You don't have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
         let topic = message.content.split(" ").splice(1).join(" ");
 
         let botMsg = await message.channel.send(":hotsprings: Saving...")
-
-        database.setTopic(message.guild.id, topic).then(() => {
+        return database.setTopic(message.guild.id, topic).then(() => {
             if (topic.length == 0) return botMsg.edit(":white_check_mark: The topic has been cleared.")
             return botMsg.edit(":white_check_mark: The topic has been updated.")
         }).catch(() => {
-            return botMsg.edit(":x: An unknown error occoured. Try again later.")
+            return botMsg.edit(":anger: An unknown error occoured. Try again later.")
         })
+    } else if (content.startsWith("c!role")) {
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
+        let mode = message.content.split(" ").splice(1)[0];
+        let count = parseInt(message.content.split(" ").splice(2)[0]);
+        let duration = message.content.split(" ").splice(3)[0];
+        let role = message.guild.roles.find(r => r.name == message.content.split(" ").splice(4).join(" "));
+        if (!role) role = message.guild.roles.get(message.content.split(" ").splice(4).join(" "))
+        if (!role) role = message.guild.roles.get(message.content.split(" ").splice(4).join(" ").replace("<@&", "").replace(">", ""))
+
+        if (!["each", "only"].includes(mode)) return message.channel.send(":x: Invalid mode. List of modes: `each`, `once`. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
+        if (!count > 0) return message.channel.send(":x: Invalid count. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
+        if (!["permanent", "temporary"].includes(duration)) return message.channel.send(":x: Invalid duration. List of durations: `permanent`, `temporary`. Use `c!srole <mode> <count> <duration> <role mention or ID>`.")
+        if (!role) return message.channel.send(":x: Invalid role. Use `c!role <mode> <count> <duration> <role mention or ID>`")
+
+        let botMsg = await message.channel.send(":hotsprings: Saving...")
+        return database.setRole(message.guild.id, mode, count, duration, role.id)
+            .then(() => { botMsg.edit(":white_check_mark: I will give the role called " + role.name + " when " + (mode == "each" ? "each " + count + " is counted" : "someone reach " + count) + " and the role will " + (duration == "permanent" ? "stay permanent until removed or a new role reward is set." : "stay until someone else get the role.")) })
+            .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
     } else if (content.startsWith("c!set")) {
-        if (!isAdmin(message.member)) return message.channel.send(":x: You don\'t have permission!")
+        if (!isAdmin(message.member)) return message.channel.send(":no_entry: You need the `MANAGE_GUILD`-permission to do this!");
         let count = parseInt(message.content.split(" ").splice(1)[0]) || -1;
-        if (count < 0) return message.channel.send(":x: Invalid count.");
-        database.setCount(message.guild.id, count)
-        return message.channel.send(":white_check_mark: Success! Count set to " + count + ".")
-    }
+        if (count < 0) return message.channel.send(":x: Invalid count. Use `c!set <count>`");
+
+        let botMsg = await message.channel.send(":hotsprings: Saving...")
+        return database.setCount(message.guild.id, count)
+            .then(() => { botMsg.edit(":white_check_mark: The count is set to " + count + ".") })
+            .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
+    } 
 
     await globalCode.command(client, settings, dbl, message);
 })
 
 function isAdmin(member) {
-    return member.hasPermission("MANAGE_GUILD") || member.user.id == "110090225929191424";
+    return member.hasPermission("MANAGE_GUILD") || ["110090225929191424", "332209233577771008"].includes(member.user.id);
 }
 
 client.login(JSON.parse(require("fs").readFileSync("./config.json")).token)
