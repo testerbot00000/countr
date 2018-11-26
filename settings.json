@@ -17,17 +17,17 @@
       },
       "description": "Set up a counting channel.",
       "notes": ["Commands will be disabled in the counting channel."],
-      "examples": ["link #counting-channel"]
+      "examples": ["link #counting-channel"],
       "admin": true
     },
     {
       "command": "unlink",
-      "description": "Unlink the current counting channel."
+      "description": "Unlink the current counting channel.",
       "admin": true
     },
     {
       "command": "reset",
-      "description": "Reset the count back to 0."
+      "description": "Reset the count back to 0.",
       "admin": true
     },
     {
@@ -50,7 +50,7 @@
       "args": {
         "[topic]": "can be what you want to be displayed in the topic. Leave it empty to reset it. Set to 'disable' to disable it completely. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
       },
-      "description": "Set the topic."
+      "description": "Set the topic.",
       "admin": true
     },
     {
@@ -58,7 +58,7 @@
       "args": {
         "<count>": "is whatever you want to set the count to."
       },
-      "description": "Set the count to a specific count."
+      "description": "Set the count to a specific count.",
       "admin": true
     },
     {
@@ -70,7 +70,7 @@
         "<role>": "is where you define the role. It can be either the name, mention or ID of the role."
       },
       "description": "Set up a role prize so people can get roles when they count.",
-      "notes": ["Give Countr the Manage Roles-permission and have the Countr-role over the role(s) you want to be rewarded."]
+      "notes": ["Give Countr the Manage Roles-permission and have the Countr-role over the role(s) you want to be rewarded."],
       "admin": true
     }
   ],
