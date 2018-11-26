@@ -2,54 +2,77 @@
     "commands": [
         {
             "command": "help",
-            "args": "[-dm]",
-            "description": "Gives you information about the bot. If you use '-dm', it sends to you in DMs."
+            "args": {
+				"[-dm]": "can be added to make the bot send the output to your DMs."
+			},
+            "description": "Gives you information about the bot.",
         },
         {
             "command": "ping",
-            "args": "",
             "description": "Gives you the bot's ping."
         },
         {
             "command": "link",
-            "args": "[channel name, mention or ID]",
-            "description": "Set the channel to the guild's counting channel. Leave empty to use the current channel. Note: Commands will be disabled in the counting channel."
+            "args": {
+				"[channel]": "can either be the name, a mention or the ID of a channel. Leave empty to use the channel the message was sent in."
+			},
+            "description": "Set up a counting channel.", 
+            "notes": [ "Commands will be disabled in the counting channel." ],
+			"examples": [ "link #counting-channel" ]
+			"admin": true
         },
         {
             "command": "unlink",
-            "args": "",
             "description": "Unlink the current counting channel."
+			"admin": true
         },
         {
             "command": "reset",
-            "args": "",
             "description": "Reset the count back to 0."
+			"admin": true
         },
         {
             "command": "toggle",
-            "args": "[module]",
-            "description": "Toggle modules. Leave empty to get a list of modules."
+            "args": {
+				"[module]": "can be a name of a module you want to toggle. Leave empty to get a list of modules."
+			},
+            "description": "Toggle different modules.",
+			"admin": true
         },
         {
             "command": "subscribe",
-            "args": "<count>",
+            "args": {
+				"<count>": "is the count you want to get notified of."
+			},
             "description": "Subscribe to a count in the guild."
         },
         {
             "command": "topic",
-            "args": "[topic]",
-            "description": "Set the topic. Leave empty to clear topic. Set to 'disable' to disable it completely. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
+            "args": {
+				"[topic]": "can be what you want to be displayed in the topic. Leave it empty to reset it. Set to 'disable' to disable it completely. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
+			},
+            "description": "Set the topic."
+			"admin": true
         },
         {
             "command": "set",
-            "args": "<count>",
+            "args": {
+				"<count>": "is whatever you want to set the count to."
+			},
             "description": "Set the count to a specific count."
+			"admin": true
         },
-		    {
+		{
             "command": "role",
-            "args": "<mode: each|only> <count> <duration: permanent:temporary> <role name, mention or ID>",
-            "description": "Set up a prize so people can get prizes when they count. Note: Give Countr the Manage Roles-permission and have the Countr-role over the role(s) you want to be rewarded."
-		    }
+            "args": {
+				"<mode: each|only>": "is where you define the mode. Setting it to \"each\" will set it to each <count>, ex. 1000 will accept 1000, 2000, 3000 etc. Setting it to \"only\" will set it to only be <count>.",
+				"<count>": "is where you set the count that can be rewarded users.",
+				"<duration>": "is where you decide the duration. Setting it to \"permanent\" will make the role stay permanent on until it's removed manually. Setting it to \"temporary\" will only allow 1 person to have the role, aka. when someone gets the role, the other person gets kicked out of the role.",
+				"<role>": "is where you define the role. It can be either the name, mention or ID of the role." },
+            "description": "Set up a role prize so people can get roles when they count.",
+			"notes": [ "Give Countr the Manage Roles-permission and have the Countr-role over the role(s) you want to be rewarded." ]
+			"admin": true
+		}
     ],
     "modules": [
         {
@@ -90,5 +113,6 @@
         "ok": 4437377,
         "err": 15746887,
         "warn": 16426522
-    }
+    },
+	"showVPS": true
 }

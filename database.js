@@ -27,7 +27,7 @@ const roleSchema = mongoose.Schema({
 
 const Guild = mongoose.model("Guild", guildSchema);
 const Subscribe = mongoose.model("Subscribe", subscribeSchema);
-const Role = mongoose.model("Role", roleSchema)
+const Role = mongoose.model("Role", roleSchema);
 
 module.exports = function(client) { return {
     saveCountingChannel(guildid, channelid) {

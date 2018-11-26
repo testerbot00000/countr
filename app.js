@@ -165,7 +165,7 @@ client.on('message', async message => {
         if (!role) role = message.guild.roles.get(message.content.split(" ").splice(4).join(" "))
         if (!role) role = message.guild.roles.get(message.content.split(" ").splice(4).join(" ").replace("<@&", "").replace(">", ""))
 
-        if (!["each", "only"].includes(mode)) return message.channel.send(":x: Invalid mode. List of modes: `each`, `once`. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
+        if (!["each", "only"].includes(mode)) return message.channel.send(":x: Invalid mode. List of modes: `each`, `only`. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
         if (!count > 0) return message.channel.send(":x: Invalid count. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
         if (!["permanent", "temporary"].includes(duration)) return message.channel.send(":x: Invalid duration. List of durations: `permanent`, `temporary`. Use `c!srole <mode> <count> <duration> <role mention or ID>`.")
         if (!role) return message.channel.send(":x: Invalid role. Use `c!role <mode> <count> <duration> <role mention or ID>`")
