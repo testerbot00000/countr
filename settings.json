@@ -4,7 +4,7 @@
       "args": {
         "[-dm]": "can be added to make the bot send the output to your DMs."
       },
-      "description": "Gives you information about the bot.",
+      "description": "Gives you information about the bot."
     },
     {
       "command": "ping",
