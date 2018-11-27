@@ -64,7 +64,7 @@
     {
       "command": "role",
       "args": {
-        "<mode: each|only>": "is where you define the mode. Setting it to \"each\" will set it to each <count>, ex. 1000 will accept 1000, 2000, 3000 etc. Setting it to \"only\" will set it to only be <count>.",
+        "<mode>": "is where you define the mode. Setting it to \"each\" will set it to each <count>, ex. 1000 will accept 1000, 2000, 3000 etc. Setting it to \"only\" will set it to only be <count>.",
         "<count>": "is where you set the count that can be rewarded users.",
         "<duration>": "is where you decide the duration. Setting it to \"permanent\" will make the role stay permanent on until it's removed manually. Setting it to \"temporary\" will only allow 1 person to have the role, aka. when someone gets the role, the other person gets kicked out of the role.",
         "<role>": "is where you define the role. It can be either the name, mention or ID of the role."
