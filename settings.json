@@ -36,6 +36,8 @@
         "[module]": "can be a name of a module you want to toggle. Leave empty to get a list of modules."
       },
       "description": "Toggle different modules.",
+	  "notes": ["Modules can be found further down on this page."],
+	  "examples": ["toggle webhook"],
       "admin": true
     },
     {
@@ -43,6 +45,7 @@
       "args": {
         "<count>": "is the count you want to get notified of."
       },
+	  "examples": ["subscribe 10000"],
       "description": "Subscribe to a count in the guild."
     },
     {
@@ -50,6 +53,7 @@
       "args": {
         "[topic]": "can be what you want to be displayed in the topic. Leave it empty to reset it. Set to 'disable' to disable it completely. If you use {{COUNT}} as a placeholder, you can customize it to however you want."
       },
+	  "examples": ["topic Count to infinity!", "topic Count to infinity, next count is {{COUNT}}, who gets it?"],
       "description": "Set the topic.",
       "admin": true
     },
@@ -64,12 +68,13 @@
     {
       "command": "role",
       "args": {
-        "<mode>": "is where you define the mode. Setting it to \"each\" will set it to each <count>, ex. 1000 will accept 1000, 2000, 3000 etc. Setting it to \"only\" will set it to only be <count>.",
-        "<count>": "is where you set the count that can be rewarded users.",
+        "<mode>": "is where you define the mode. Setting it to \"each\" will set it to each &lt;count&gt;, ex. 1000 will accept 1000, 2000, 3000 etc. Setting it to \"only\" will set it to only be <count>.",
+        "<count>": "is where you set the count that the bot will check on.",
         "<duration>": "is where you decide the duration. Setting it to \"permanent\" will make the role stay permanent on until it's removed manually. Setting it to \"temporary\" will only allow 1 person to have the role, aka. when someone gets the role, the other person gets kicked out of the role.",
-        "<role>": "is where you define the role. It can be either the name, mention or ID of the role."
+        "<role...>": "is where you define the role. It can be either the name, mention or ID of the role."
       },
       "description": "Set up a role prize so people can get roles when they count.",
+	  "examples": ["role each 50 temporary Counting Master"],
       "notes": ["Give Countr the Manage Roles-permission and have the Countr-role over the role(s) you want to be rewarded."],
       "admin": true
     }

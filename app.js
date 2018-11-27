@@ -192,6 +192,6 @@ function isAdmin(member) {
     return member.hasPermission("MANAGE_GUILD") || ["110090225929191424", "332209233577771008"].includes(member.user.id);
 }
 
-client.login(JSON.parse(require("fs").readFileSync("./config.json")).token)
+client.login(config.token)
 
 globalCode.logging(client)
