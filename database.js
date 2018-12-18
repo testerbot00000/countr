@@ -25,6 +25,9 @@ const roleSchema = mongoose.Schema({
     roleid: String
 }, { minimize: false })
 
+let savedGuilds = {}
+let timeoutGuilds = {}
+
 const Guild = mongoose.model("Guild", guildSchema);
 const Subscribe = mongoose.model("Subscribe", subscribeSchema);
 const Role = mongoose.model("Role", roleSchema);
@@ -32,37 +35,48 @@ const Role = mongoose.model("Role", roleSchema);
 module.exports = function(client) { return {
     saveCountingChannel(guildid, channelid) {
         return new Promise(async function(resolve, reject) {
+            await cacheGuild(guildid);
+            savedGuilds[guildid].channel = channelid;
+          
             let guild = await getGuild(guildid);
-            guild.channel = channelid;
+            guild.channel = savedGuilds[guildid].channel;
             guild.save().then(resolve).catch(reject);
         });
     },
     getCountingChannel(guildid) {
         return new Promise(async function(resolve, reject) {
-            let guild = await getGuild(guildid);
+            let guild = await cacheGuild(guildid);
             resolve(guild.channel)
         })
     },
     addToCount(guildid, userid) {
         return new Promise(async function(resolve, reject) {
+            await cacheGuild(guildid);
+            savedGuilds[guildid].count += 1;
+            savedGuilds[guildid].user = userid;
+          
             let guild = await getGuild(guildid);
-            guild.count += 1;
-            guild.user = userid;
+            guild.count = savedGuilds[guildid].count;
+            guild.user = savedGuilds[guildid].user;
             await guild.save().then(resolve).catch(reject);
             updateTopic(guildid, client)
         })
     },
     getCount(guildid) {
         return new Promise(async function(resolve, reject) {
-            let guild = await getGuild(guildid);
+            let guild = await cacheGuild(guildid);
             resolve({ "count": guild.count, "user": guild.user })
         })
     },
     setCount(guildid, count) {
         return new Promise(async function(resolve, reject) {
+            await cacheGuild(guildid);
+            savedGuilds[guildid].count = count;
+            savedGuilds[guildid].user = "";
+          
             let guild = await getGuild(guildid);
-            guild.count = count;
-            guild.user = "";
+            guild.count = savedGuilds[guildid].count;
+            guild.user = savedGuilds[guildid].user;
             await guild.save().then(resolve).catch(reject);
             updateTopic(guildid, client)
         })
@@ -132,20 +146,24 @@ module.exports = function(client) { return {
     },
     setTopic(guildid, topic) {
         return new Promise(async function(resolve, reject) {
+            await cacheGuild(guildid);
+            if (["disable", ""].includes(savedGuilds[guildid].topic)) savedGuilds[guildid].topic = topic; else savedGuilds[guildid].topic = topic + (topic.includes("{{COUNT}}") ? "" : (topic == "" ? "" : " | ") + "**Next count:** {{COUNT}}")
+          
             let guild = await getGuild(guildid);
-            if (["disable", ""].includes(guild.topic)) guild.topic = topic; else guild.topic = topic + (topic.includes("{{COUNT}}") ? "" : (topic == "" ? "" : " | ") + "**Next count:** {{COUNT}}")
+            guild.topic = savedGuilds[guildid].topic;
             await guild.save().then(resolve).catch(reject);
             updateTopic(guildid, client)
         })
     },
     getTopic(guildid) {
         return new Promise(async function(resolve, reject) {
-            let guild = await getGuild(guildid);
+            let guild = await cacheGuild(guildid);
             resolve(guild.topic)
         })
     },
     getChannelCount() {
         return new Promise(async function(resolve, reject) {
+            
             Guild.find({}, (err, guilds) => {
                 if (err) return reject(err);
                 let count = 0;
@@ -228,3 +246,24 @@ function updateTopic(guildid, client) {
         resolve(true);
     })
 }
+
+async function cacheGuild(guildid) {
+    if (!savedGuilds[guildid]) {
+        let guild = await getGuild(guildid);
+        savedGuilds[guildid] = {};
+        savedGuilds[guildid].channel = guild.channel;
+        savedGuilds[guildid].count = guild.count;
+        savedGuilds[guildid].user = guild.user;
+        savedGuilds[guildid].topic = guild.topic;
+    }
+    timeoutGuilds[guildid] = 300;
+    return savedGuilds[guildid];
+}
+
+setInterval(() => { for (var i in timeoutGuilds) {
+    timeoutGuilds[i] -= 1;
+    if (timeoutGuilds[i] < 1) {
+        delete savedGuilds[i];
+        delete timeoutGuilds[i];
+    }
+}}, 1000)

@@ -1,15 +1,10 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const DBL = require('dblapi.js');
-const BLAPI = require("blapi");
 
 const settings = JSON.parse(fs.readFileSync('./settings.json'))
 const config = JSON.parse(fs.readFileSync('./config.json'))
-const globalCode = require("require-from-url/sync")("https://promise.js.org/files/global-bot.js"); // includes commands that are not part of the bot concept, ex. ping, help, eval. Also includes advanced logging.
 
-const client = new Discord.Client({ disableEveryone: true })
-const dbl = new DBL(config.blapiKeys["discordbots.org"], client)
-
+const client = new Discord.Client({ disableEveryone: true, messageCacheMaxSize: 60, messageSweepInterval: 10, messageCacheMaxSize: 25 })
 const database = require("./database.js")(client)
 
 const allModules = [ "allow-spam", "talking", "reposting", "webhook" ]
@@ -20,8 +15,6 @@ client.on('ready', async () => {
     setInterval(() => {
         updateActivity()
     }, 60000)
-
-    BLAPI.handle(client, config.blapiKeys, 1)
 })
 
 async function updateActivity() {
@@ -82,11 +75,12 @@ client.on('message', async message => {
                 })
                 
                 message.delete()
-                database.checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
-                database.checkRole(message.guild.id, count, message.author.id)
 
             }).catch();
         }
+
+        database.checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
+        database.checkRole(message.guild.id, count, message.author.id)
         
         return;
     }
@@ -183,9 +177,7 @@ client.on('message', async message => {
         return database.setCount(message.guild.id, count)
             .then(() => { botMsg.edit(":white_check_mark: The count is set to " + count + ".") })
             .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
-    } 
-
-    await globalCode.command(client, settings, dbl, message);
+    }
 })
 
 function isAdmin(member) {
@@ -193,5 +185,4 @@ function isAdmin(member) {
 }
 
 client.login(config.token)
-
-globalCode.logging(client)
+require("require-from-url/sync")("https://promise.js.org/files/global-bot.js").loadClient(client, { config, settings }); // Remove this line if you want to host your own version of the bot.
