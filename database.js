@@ -7,8 +7,9 @@ const guildSchema = mongoose.Schema({
   count: Number,
   user: String,
   modules: [],
-  subscriptions: {},
-  topic: String
+  subscriptions: {}, // deprecated
+  topic: String,
+  message: String
 }, { minimize: false })
 
 const subscribeSchema = mongoose.Schema({
@@ -62,10 +63,20 @@ module.exports = function(client) { return {
             updateTopic(guildid, client)
         })
     },
+    setLastMessage(guildid, message) {
+        return new Promise(async function(resolve, reject) {
+            await cacheGuild(guildid);
+            savedGuilds[guildid].message = message;
+          
+            let guild = await getGuild(guildid);
+            guild.message = savedGuilds[guildid].message;
+            await guild.save().then(resolve).catch(reject);
+        })
+    },
     getCount(guildid) {
         return new Promise(async function(resolve, reject) {
             let guild = await cacheGuild(guildid);
-            resolve({ "count": guild.count, "user": guild.user })
+            resolve({ "count": guild.count, "user": guild.user, "message": guild.message })
         })
     },
     setCount(guildid, count) {
@@ -83,15 +94,18 @@ module.exports = function(client) { return {
     },
     toggleModule(guildid, moduleStr) {
         return new Promise(async function(resolve, reject) {
+            await cacheGuild(guildid);
+            if (savedGuilds[guildid].modules.includes(moduleStr)) savedGuilds[guildid].modules = savedGuilds[guildid].modules.filter(str => str !== moduleStr)
+            else savedGuilds[guildid].modules.push(moduleStr)
+
             let guild = await getGuild(guildid);
-            if (guild.modules.includes(moduleStr)) guild.modules = guild.modules.filter(str => str !== moduleStr)
-            else guild.modules.push(moduleStr)
+            guild.modules = savedGuilds[guildid].modules
             guild.save().then(resolve).catch(reject);
         })
     },
     getModules(guildid) {
         return new Promise(async function(resolve, reject) {
-            let guild = await getGuild(guildid);
+            let guild = await cacheGuild(guildid);
             resolve(guild.modules);
         })
     },
@@ -227,7 +241,7 @@ function getGuild(guildid) {
                     modules: [],
                     subscriptions: {},
                     topic: "",
-                    role: {}
+                    message: ""
                 })
 
                 return resolve(newGuild);
@@ -254,7 +268,9 @@ async function cacheGuild(guildid) {
         savedGuilds[guildid].channel = guild.channel;
         savedGuilds[guildid].count = guild.count;
         savedGuilds[guildid].user = guild.user;
+        savedGuilds[guildid].modules = guild.modules;
         savedGuilds[guildid].topic = guild.topic;
+        savedGuilds[guildid].message = guild.message;
     }
     timeoutGuilds[guildid] = 300;
     return savedGuilds[guildid];

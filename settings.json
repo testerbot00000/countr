@@ -98,6 +98,11 @@
       "module": "webhook",
       "description": "This makes the reposted message be a webhook. (Requires the 'reposting'-module)",
       "permissions": ["MANAGE_WEBHOOKS"]
+    },
+    {
+      "module": "recover",
+      "description": "This makes the bot delete all new messages while it's been offline. In a nutshell, resumes the counting.",
+      "permissions": []
     }
   ],
   "contributors": [{
@@ -113,10 +118,6 @@
   ],
   "prefix": "c!",
   "id": "467377486141980682",
-  "embedColor": {
-    "ok": 4437377,
-    "err": 15746887,
-    "warn": 16426522
-  },
+  "color": 11552306,
   "showVPS": true
 }

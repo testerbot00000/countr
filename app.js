@@ -7,19 +7,60 @@ const config = JSON.parse(fs.readFileSync('./config.json'))
 const client = new Discord.Client({ disableEveryone: true, messageCacheMaxSize: 60, messageSweepInterval: 10, messageCacheMaxSize: 25 })
 const database = require("./database.js")(client)
 
-const allModules = [ "allow-spam", "talking", "reposting", "webhook" ]
+const allModules = [ "allow-spam", "talking", "reposting", "webhook", "recover" ]
+
+let disabledGuilds = []
 
 client.on('ready', async () => {
-
     updateActivity()
     setInterval(() => {
         updateActivity()
     }, 60000)
+    
+    client.guilds.forEach(processGuild)
 })
 
 async function updateActivity() {
     let count = await database.getChannelCount();
     client.user.setActivity("c!info (" + count + " counting channels) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
+}
+
+async function processGuild(guild) {
+    disabledGuilds.push(guild.id);
+    let modules = await database.getModules(guild.id);
+    if (!modules.includes("recover")) return disabledGuilds = disabledGuilds.filter(g => g != guild.id);
+
+    let countingChannel = await database.getCountingChannel(guild.id);
+    let channel = guild.channels.get(countingChannel)
+
+    if (channel) {
+        let _count = await database.getCount(guild.id);
+        let messages = await channel.fetchMessages({ limit: 100, after: _count.message })
+        if (messages.array().length < 1) return disabledGuilds = disabledGuilds.filter(g => g != guild.id);
+
+        let botMsg = await channel.send("**Making channel ready for counting..**\n:warning: Locking channel.")
+        await channel.overwritePermissions(guild.defaultRole, { SEND_MESSAGES: false })
+        .then(() => botMsg.edit("**Making channel ready for counting..**\n:warning: Channel locked. Deleting new entries."))
+        .catch(() => botMsg.edit("**Making channel ready for counting..**\n:warning: Failed to lock channel. Deleting new entries."))
+        let processing = true;
+        let fail = false;
+        while (processing) {
+            let _count = await database.getCount(guild.id);
+            let messages = await channel.fetchMessages({ limit: 100, after: _count.message })
+            messages = messages.filter(m => m.id != botMsg.id);
+            if (messages.array().length < 1) processing = false;
+            else await channel.bulkDelete(messages)
+            .catch(() => { fail = true; })
+        }
+        await botMsg.edit("**Making channel ready for counting..**\n:warning: " + (fail ? "Failed to delete entries." : "Deleted new entries.") + " Restoring channel.")
+        await channel.overwritePermissions(guild.defaultRole, { SEND_MESSAGES: true })
+        .then(() => botMsg.edit("**Making channel ready for counting..**\n:white_check_mark: Channel restored. Happy counting!"))
+        .catch(() => botMsg.edit("**Making channel ready for counting..**\n:x: Failed to restore channel."))
+
+        setTimeout(() => { botMsg.delete() }, 5000)
+    }
+
+    disabledGuilds = disabledGuilds.filter(g => g != guild.id);
 }
 
 client.on('message', async message => {
@@ -31,6 +72,7 @@ client.on('message', async message => {
 
     let countingChannel = await database.getCountingChannel(message.guild.id);
     if (message.channel.id == countingChannel) {
+        if (disabledGuilds.includes(message.guild.id)) return message.delete()
         if (message.author.bot && message.webhookID == null) return message.delete()
         if (message.webhookID != null) return;
         let _count = await database.getCount(message.guild.id);
@@ -53,22 +95,15 @@ client.on('message', async message => {
                     }
                 })
                 message.delete()
-                database.checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
-            } else message.channel.fetchWebhooks().then(async webhooks => {
+            } else await message.channel.fetchWebhooks().then(async webhooks => {
                 let foundHook = webhooks.find(webhook => webhook.name == 'Countr Reposting')
                 
                 if (!foundHook) { // create a new webhook
-                    message.channel.createWebhook('Countr Reposting', client.user.avatarURL)
-                        .then(async webhook => {
-                            webhook.edit('Countr Reposting', client.user.avatarURL)
-                            countMsg = await webhook.send(message.content, {
-                                username: message.author.username,
-                                avatarURL: message.author.displayAvatarURL.split("?")[0]
-                            })
-
-                            message.delete()
-                            database.checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
-                        })
+                    let webhook = await message.channel.createWebhook('Countr Reposting')
+                    countMsg = await webhook.send(message.content, {
+                        username: message.author.username,
+                        avatarURL: message.author.displayAvatarURL.split("?")[0]
+                    })
                 } else countMsg = await foundHook.send(message.content, {
                     username: message.author.username,
                     avatarURL: message.author.displayAvatarURL.split("?")[0]
@@ -79,6 +114,7 @@ client.on('message', async message => {
             }).catch();
         }
 
+        database.setLastMessage(message.guild.id, countMsg.id)
         database.checkSubscribed(message.guild.id, count, message.author.id, countMsg.id)
         database.checkRole(message.guild.id, count, message.author.id)
         
@@ -121,9 +157,10 @@ client.on('message', async message => {
         arg = arg.toLowerCase()
         let modules = await database.getModules(message.guild.id);
         if (allModules.includes(arg)) {
+            let state = modules.includes(arg)
             let botMsg = await message.channel.send(":hotsprings: " + (modules.includes(arg) ? "Disabling" : "Enabling") + "...")
             return database.toggleModule(message.guild.id, arg)
-              .then(() => { botMsg.edit(":white_check_mark: Module \`" + arg + "\` is now " + (modules.includes(arg) ? "disabled" : "enabled") + ".") })
+              .then(() => { botMsg.edit(":white_check_mark: Module \`" + arg + "\` is now " + (state ? "disabled" : "enabled") + "."); })
               .catch(() => { botMsg.edit(":anger: Could not save to the database. Try again later.") })
         } else {
             return message.channel.send(":x: Module does not exist.")
@@ -161,7 +198,7 @@ client.on('message', async message => {
 
         if (!["each", "only"].includes(mode)) return message.channel.send(":x: Invalid mode. List of modes: `each`, `only`. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
         if (!count > 0) return message.channel.send(":x: Invalid count. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
-        if (!["permanent", "temporary"].includes(duration)) return message.channel.send(":x: Invalid duration. List of durations: `permanent`, `temporary`. Use `c!srole <mode> <count> <duration> <role mention or ID>`.")
+        if (!["permanent", "temporary"].includes(duration)) return message.channel.send(":x: Invalid duration. List of durations: `permanent`, `temporary`. Use `c!role <mode> <count> <duration> <role mention or ID>`.")
         if (!role) return message.channel.send(":x: Invalid role. Use `c!role <mode> <count> <duration> <role mention or ID>`")
 
         let botMsg = await message.channel.send(":hotsprings: Saving...")
@@ -181,7 +218,7 @@ client.on('message', async message => {
 })
 
 function isAdmin(member) {
-    return member.hasPermission("MANAGE_GUILD") || ["110090225929191424", "332209233577771008"].includes(member.user.id);
+    return member.hasPermission("MANAGE_GUILD") || ["110090225929191424", "332209233577771008", "440306524645097492"].includes(member.user.id);
 }
 
 client.login(config.token)
