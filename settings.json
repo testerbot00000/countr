@@ -101,7 +101,7 @@
     },
     {
       "module": "recover",
-      "description": "This makes the bot delete all new messages while it's been offline. In a nutshell, resumes the counting.",
+      "description": "This makes the bot delete all new messages while it's been offline. In a nutshell, resumes the counting. This feature is BETA, so use it at your own risk.",
       "permissions": []
     }
   ],

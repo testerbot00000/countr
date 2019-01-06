@@ -22,7 +22,7 @@ client.on('ready', async () => {
 
 async function updateActivity() {
     let count = await database.getChannelCount();
-    client.user.setActivity("c!info (" + count + " counting channels) [" + (client.shard.id == 0 ? "1" : client.shard.id) + "/" + client.shard.count + "]", { type: "WATCHING" })
+    client.user.setActivity("c!info (" + count + " counting channels) [" + client.shard.id + "/" + client.shard.count + "]", { type: "WATCHING" })
 }
 
 async function processGuild(guild) {
