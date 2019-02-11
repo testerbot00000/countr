@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>About · GitBook</title>
+        <title>FAQ · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,8 +57,8 @@
     <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="quickguide.html" />
     
+    <link rel="prev" href="rewards.html" />
     
 
     </head>
@@ -87,7 +87,7 @@
         
         
     
-        <li class="chapter active" data-level="1.1" data-path="./">
+        <li class="chapter " data-level="1.1" data-path="./">
             
                 <a href="./">
             
@@ -152,7 +152,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6" data-path="faq.html">
+        <li class="chapter active" data-level="1.6" data-path="faq.html">
             
                 <a href="faq.html">
             
@@ -254,7 +254,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="." >About</a>
+        <a href="." >FAQ</a>
     </h1>
 </div>
 
@@ -269,25 +269,30 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="countr">Countr</h1>
-<p><strong>Countr</strong> is a simple counting bot which can manage a counting channel for your guild. There is a lot of multi-purpose bots out there, some of them may also include a simple counting setup. Countr is not multi-purpose, it&apos;s only focused on counting. This means Countr has much more counting channel features than other bots. Countr has a simple setup but also has cool advanced features, such as modules, rewards and more. </p>
-<h2 id="content-of-this-book">Content of this book</h2>
+                                <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+<p>These are questions we get asked a lot of in our ticket system. Yes, stupid people come with stupid questions.</p>
+<h4 id="how-do-i-set-up-a-counting-channel">How do I set up a counting channel?</h4>
+<p>Check out our <a href="quickguide.html">Quick Guide</a>.</p>
+<h4 id="i-tried-to-enable-the-module-talking-using-ctalking-but-it-doesnt-work">I tried to enable the module talking using <code>c!talking</code> but it doesnt work.</h4>
+<p>This is not a command. Use <code>c!toggle talking</code>. (or any other module)</p>
+<h4 id="ive-already-counted-1-but-it-just-deletes-2">I&apos;ve already counted 1, but it just deletes 2!</h4>
+<p>To avoid spam, by default it cannot be the same user who counts twice in a row. If you want to disable this, type <code>c!toggle allow-spam</code>.</p>
+<h4 id="my-count-is-glitched-out-why-and-how-to-fix">My count is glitched out, why? And how to fix?</h4>
+<p>This is common reasons we deal with every day:</p>
 <ul>
-<li><a href=".">About</a></li>
-<li><a href="quickguide.html">Quick Guide</a></li>
-<li><a href="admincommands.html">Admin Commands</a></li>
-<li><a href="usercommands.html">User Commands</a></li>
-<li><a href="rewards.html">Rewards</a></li>
-<li><a href="faq.html">FAQ</a></li>
+<li>You or someone else deleted the previous count, so it looks messed up.
+A fix could be to use <code>c!set</code> to set the count back. If this doesn&apos;t work, try to <code>c!reset</code> and then <code>c!set</code> again. To avoid this from happening, (stop deleting your messages and) enable the module <code>reposting</code>. This will repost the count so users can&apos;t self-delete.</li>
 </ul>
-<h2 id="other-links">Other links</h2>
-<ul>
-<li><a href="https://discord.gg/SwY8ZBE" target="_blank">Support Server</a></li>
-<li><a href="https://github.com/gleeny/countr/" target="_blank">GitHub Repository</a></li>
-<li><a href="https://trello.com/b/6fIzYrDk/countr/" target="_blank">Trello</a></li>
-<li><a href="https://patreon.com/gleeny" target="_blank">Patreon</a></li>
-</ul>
-<p><a href="https://discordbots.org/bot/countr" target="_blank"><img src="https://discordbots.org/api/widget/467377486141980682.svg?topcolor=BD4632&amp;middlecolor=7a2d20&amp;usernamecolor=FFFFFF&amp;datacolor=FFFFFF&amp;labelcolor=d5d5d5&amp;highlightcolor=BD4632" alt="discordbots.org"></a></p>
+<h4 id="is-there-any-way-of-avoiding-a-message-getting-deleted">Is there any way of avoiding a message getting deleted?</h4>
+<p>Yes, start your message with <code>!</code> and Countr will ignore your message as long as you have Manage Messages-permission.</p>
+<h4 id="what-information-is-getting-stored-in-your-systems">What information is getting stored in your systems?</h4>
+<p>If you type <code>c!dumpconfig</code> (command coming soon), you can see what information we store on your guild.
+When subscribing to a count in a guild, we store your user ID, the guild ID and what count you want to get notified of.
+When setting up a role, we store the guild ID, the role ID, if you want to restrict it to only 1 person and what count the role will be rewarded.</p>
+<h4 id="countr-is-slow-please-fix">Countr is slow, please fix.</h4>
+<p>We are aware it might be slow sometimes. If you want to support Countr and get me a better VPS it can be sitting on, please <a href="https://patreon.com/gleeny" target="_blank">support me on Patreon</a>.</p>
+<h4 id="i-need-further-help">I need further help!</h4>
+<p>Please join our <a href="https://discord.gg/SwY8ZBE" target="_blank">support server</a>.</p>
 
                                 
                                 </section>
@@ -315,10 +320,10 @@
 
             
                 
-                
-                <a href="quickguide.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Quick Guide">
-                    <i class="fa fa-angle-right"></i>
+                <a href="rewards.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Rewards">
+                    <i class="fa fa-angle-left"></i>
                 </a>
+                
                 
             
         
@@ -327,7 +332,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"About","level":"1.1","depth":1,"next":{"title":"Quick Guide","level":"1.2","depth":1,"path":"quickguide.md","ref":"quickguide.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"README.md","mtime":"2019-02-11T16:35:04.224Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-11T18:08:42.584Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"FAQ","level":"1.6","depth":1,"next":{"title":"Support","level":"2.1","depth":1,"url":"https://discord.gg/SwY8ZBE","ref":"https://discord.gg/SwY8ZBE","articles":[]},"previous":{"title":"Rewards","level":"1.5","depth":1,"path":"rewards.md","ref":"rewards.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"faq.md","mtime":"2019-02-11T16:59:22.328Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-11T18:08:42.584Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>

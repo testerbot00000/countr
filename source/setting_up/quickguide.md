@@ -1,3 +1,0 @@
-# Quick Guide
-
-hello hi

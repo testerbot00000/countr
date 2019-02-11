@@ -1,3 +1,0 @@
-# Counting Rewards
-
-hello
