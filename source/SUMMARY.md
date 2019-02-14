@@ -5,7 +5,7 @@
 * [Quick Guide](quickguide.md)
 * [Admin Commands](admincommands.md)
 * [User Commands](usercommands.md)
-* [Rewards](rewards.md)
+* [Counting Rewards](countingrewards.md)
 * [FAQ](faq.md)
 
 ## Other links

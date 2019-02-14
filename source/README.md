@@ -8,7 +8,7 @@
 * [Quick Guide](quickguide.html)
 * [Admin Commands](admincommands.html)
 * [User Commands](usercommands.html)
-* [Rewards](rewards.html)
+* [Counting Rewards](countingrewards.html)
 * [FAQ](faq.html)
 
 ## Other links
@@ -18,4 +18,4 @@
 * [Trello](https://trello.com/b/6fIzYrDk/countr/)
 * [Patreon](https://patreon.com/gleeny)
 
-[![discordbots.org](https://discordbots.org/api/widget/467377486141980682.svg?topcolor=BD4632&middlecolor=7a2d20&usernamecolor=FFFFFF&datacolor=FFFFFF&labelcolor=d5d5d5&highlightcolor=BD4632)](https://discordbots.org/bot/countr)
+[![discordbots.org](https://discordbots.org/api/widget/467377486141980682.svg?topcolor=B04632&middlecolor=7a2d20&usernamecolor=FFFFFF&datacolor=FFFFFF&labelcolor=d5d5d5&highlightcolor=B04632)](https://discordbots.org/bot/countr)
