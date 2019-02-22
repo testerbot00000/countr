@@ -41,7 +41,7 @@ Toggle a module or get a list of modules.
 ### `c!topic <topic...>`
 
 Set the topic.
-- `<topic...>`: Set the topic to whatever you want. Use \`{{COUNT}}\` as a placeholder for the count. If you put "reset", it will reset back to default. If you put "disable", the topic will never change.
+- `<topic...>`: Set the topic to whatever you want. Use "\{\{COUNT}}" as a placeholder for the count. If you put "reset", it will reset back to default. If you put "disable", the topic will never change.
 - `c!topic Count to infinity! Next count is {{COUNT}}.`: An example of using a placeholder.
 
 ### `c!unlink`
