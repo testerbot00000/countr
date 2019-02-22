@@ -8,7 +8,7 @@ Setting up Countr is easy, just follow these three steps:
 
 ### Advanced features
 
-* [Rewards](/setting_up/rewards.html)
+* [Rewards](rewards.html)
 
 ### Self-hosting
 

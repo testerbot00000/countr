@@ -14,6 +14,7 @@ There is a lot of multi-purpose bots out there, some of them may also include a 
 * [Staff Commands](staffcommands.html)
 * [User Commands](usercommands.html)
 * [Rewards](rewards.html)
+* [Notifications](notifications.html)
 * [FAQ](faq.html)
 
 ### Other links

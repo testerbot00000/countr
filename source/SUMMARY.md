@@ -6,6 +6,7 @@
 * [Staff Commands](staffcommands.md)
 * [User Commands](usercommands.md)
 * [Rewards](rewards.md)
+* [Notifications](notifications.md)
 * [FAQ](faq.md)
 
 ## Other links
