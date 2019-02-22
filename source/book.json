@@ -5,7 +5,6 @@
 	"theme": "night",
 	"plugins": [
 		"local-pagefooter",
-		"recently-updated",
 		"github",
 		"back-to-top-button"
 	],
