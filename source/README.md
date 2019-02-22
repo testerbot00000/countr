@@ -1,3 +1,7 @@
+# THIS DOCUMENTATION IS FOR COUNTR 3.0
+This documentation is meant for Countr 3.0 which will come out 3rd March. Also expect downtime on Countr then.
+For Countr's original documentation, please [go here](https://promise.js.org/countr-old).
+
 # Countr
 Countr is a simple counting bot which can manage a counting channel in your guild. With a simple setup, your channel is ready.
 
