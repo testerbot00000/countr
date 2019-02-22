@@ -1,0 +1,28 @@
+{
+	"title": "Countr Documentation",
+	"description": "Countr is a bot that can manage a counting channel in your Discord guild!",
+	"author": "Gleeny, Promise#0001, glelud@gmail.com",
+	"theme": "night",
+	"plugins": [
+		"local-pagefooter",
+		"recently-updated",
+		"github",
+		"back-to-top-button"
+	],
+    "pluginsConfig": {
+		"local-pagefooter": {
+			"copyright": "&copy Gleeny,",
+			"islocal": true,
+			"modify_label": "Last change: (Local) ",
+			"modify_format": "DD-MM-YYYY HH:mm:ss"
+		},
+        "github": {
+            "url": "https://github.com/gleeny/countr/tree/gh-pages"
+        },
+		"fontSettings": {
+            "theme": "Night",
+            "family": "sans",
+            "size": 0
+        }
+    }
+}
