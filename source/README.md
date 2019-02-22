@@ -1,21 +1,24 @@
 # Countr
+Countr is a simple counting bot which can manage a counting channel in your guild. With a simple setup, your channel is ready.
 
-**Countr** is a simple counting bot which can manage a counting channel for your guild. There is a lot of multi-purpose bots out there, some of them may also include a simple counting setup. Countr is not multi-purpose, it's only focused on counting. This means Countr has much more counting channel features than other bots. Countr has a simple setup but also has cool advanced features, such as modules, rewards and more. 
+### Purpose
+There is a lot of multi-purpose bots out there, some of them may also include a simple counting setup. What's wrong about multi-purpose is that they're on focused on so many things that some of the features are poorly executed and very limited. Countr is not multi-purpose, it's only focused on counting. This means Countr has much more counting features than other bots. Countr has a simple setup but also has cool advanced features, such as modules, rewards and more.
 
-## Content of this book
-
+### Content of this book
 * [About](/)
 * [Quick Guide](quickguide.html)
-* [Admin Commands](admincommands.html)
+* [Staff Commands](staffcommands.html)
 * [User Commands](usercommands.html)
-* [Counting Rewards](countingrewards.html)
+* [Rewards](rewards.html)
 * [FAQ](faq.html)
 
-## Other links
-
+### Other links
 * [Support Server](https://discord.gg/SwY8ZBE)
 * [GitHub Repository](https://github.com/gleeny/countr/)
 * [Trello](https://trello.com/b/6fIzYrDk/countr/)
 * [Patreon](https://patreon.com/gleeny)
 
-[![discordbots.org](https://discordbots.org/api/widget/467377486141980682.svg?topcolor=B04632&middlecolor=7a2d20&usernamecolor=FFFFFF&datacolor=FFFFFF&labelcolor=d5d5d5&highlightcolor=B04632)](https://discordbots.org/bot/countr)
+[![discordbots.org](https://discordbots.org/api/widget/467377486141980682.svg)](https://discordbots.org/bot/countr)
+[![discordbotlist.com](https://discordbotlist.com/bots/467377486141980682/widget)](https://discordbotlist.com/bots/467377486141980682)
+[![divinediscordbots.com](https://divinediscordbots.com/api/widget/467377486141980682.svg)](https://divinediscordbots.com/bots/467377486141980682)
+[![discord.boats](https://discord.boats/api/widget/countr)](https://discord.boats/bot/countr)

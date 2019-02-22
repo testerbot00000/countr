@@ -3,9 +3,9 @@
 * [About](README.md)
 
 * [Quick Guide](quickguide.md)
-* [Admin Commands](admincommands.md)
+* [Staff Commands](staffcommands.md)
 * [User Commands](usercommands.md)
-* [Counting Rewards](countingrewards.md)
+* [Rewards](rewards.md)
 * [FAQ](faq.md)
 
 ## Other links

@@ -113,12 +113,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="admincommands.html">
+        <li class="chapter " data-level="1.3" data-path="staffcommands.html">
             
-                <a href="admincommands.html">
+                <a href="staffcommands.html">
             
                     
-                    Admin Commands
+                    Staff Commands
             
                 </a>
             
@@ -281,16 +281,14 @@
 <p>This is common reasons we deal with every day:</p>
 <ul>
 <li>You or someone else deleted the previous count, so it looks messed up.
-A fix could be to use <code>c!set</code> to set the count back. If this doesn&apos;t work, try to <code>c!reset</code> and then <code>c!set</code> again. To avoid this from happening, (stop deleting your messages and) enable the module <code>reposting</code>. This will repost the count so users can&apos;t self-delete.</li>
+A fix could be to use <code>c!set</code> to set the count back. If this doesn&apos;t work, try to <code>c!reset</code> and then <code>c!set</code> again. To avoid this from happening, (stop deleting your messages and) enable the module <code>webhook</code>. This will repost the count as a webhook so users can&apos;t self-delete.</li>
 </ul>
 <h4 id="is-there-any-way-of-avoiding-a-message-getting-deleted">Is there any way of avoiding a message getting deleted?</h4>
 <p>Yes, start your message with <code>!</code> and Countr will ignore your message as long as you have Manage Messages-permission.</p>
 <h4 id="what-information-is-getting-stored-in-your-systems">What information is getting stored in your systems?</h4>
-<p>If you type <code>c!dumpconfig</code> (command coming soon), you can see what information we store on your guild.
-When subscribing to a count in a guild, we store your user ID, the guild ID and what count you want to get notified of.
-When setting up a role, we store the guild ID, the role ID, if you want to restrict it to only 1 person and what count the role will be rewarded.</p>
+<p>We store the necessary data that Countr needs, no unnecessary user information is getting stored. If you still want to know what information we store from your guild, please contact a support member on our <a href="https://discord.gg/SwY8ZBE" target="_blank">support server</a>. They will require a server invite in DMs to ensure you are the real owner from that server. Only server owners can request this data.</p>
 <h4 id="countr-is-slow-please-fix">Countr is slow, please fix.</h4>
-<p>We are aware it might be slow sometimes. If you want to support Countr and get me a better VPS it can be sitting on, please <a href="https://patreon.com/gleeny" target="_blank">support me on Patreon</a>.</p>
+<p>We are aware it might be slow sometimes. This is due to rate limiting. If you want to support Countr and get upgrades for its VPS, and also get your own bot for Countr we host for you, please <a href="https://patreon.com/gleeny" target="_blank">support us on Patreon</a>. More info there.</p>
 <h4 id="i-need-further-help">I need further help!</h4>
 <p>Please join our <a href="https://discord.gg/SwY8ZBE" target="_blank">support server</a>.</p>
 
@@ -332,7 +330,7 @@ When setting up a role, we store the guild ID, the role ID, if you want to restr
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"FAQ","level":"1.6","depth":1,"next":{"title":"Support","level":"2.1","depth":1,"url":"https://discord.gg/SwY8ZBE","ref":"https://discord.gg/SwY8ZBE","articles":[]},"previous":{"title":"Rewards","level":"1.5","depth":1,"path":"rewards.md","ref":"rewards.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"faq.md","mtime":"2019-02-11T16:59:22.328Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-11T18:08:42.584Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"FAQ","level":"1.6","depth":1,"next":{"title":"Support","level":"2.1","depth":1,"url":"https://discord.gg/SwY8ZBE","ref":"https://discord.gg/SwY8ZBE","articles":[]},"previous":{"title":"Rewards","level":"1.5","depth":1,"path":"rewards.md","ref":"rewards.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"faq.md","mtime":"2019-02-22T10:33:30.894Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-22T11:51:54.636Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
