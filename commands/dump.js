@@ -4,5 +4,5 @@ module.exports.run = async (client, message, args, db, permissionLevel, config) 
 }
 
 // 0 All, 1 Mods, 2 Admins, 3 Global Admins, 4 First Global Admin
-module.exports.permissionRequired = 3
+module.exports.permissionRequired = 4
 module.exports.argsRequired = 0
