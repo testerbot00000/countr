@@ -1,6 +1,6 @@
 {
-    "token": "",
-    "database_uri": "",
+    "token": "NTUwODk0NzExMTUwMjE1MTY4.D1pEMw.zBXFp5ptUGMluJ8rVCrfxeo5XUk",
+    "database_uri": "mongodb://counting:countingfordf@cluster0-shard-00-00-xzdta.mongodb.net:27017,cluster0-shard-00-01-xzdta.mongodb.net:27017,cluster0-shard-00-02-xzdta.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true",
     "admins": [ "404832977366024232" ],
     "prefix": "c!",
     "mainGuild": "540333759782715402"
