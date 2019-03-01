@@ -10,8 +10,8 @@ module.exports.run = async (client, message, args, db, permissionLevel, config) 
 }
 
 // 0 All, 1 Mods, 2 Admins, 3 Global Admins, 4 First Global Admin
-module.exports.permissionRequired = 2
-module.exports.argsRequired = 2
+module.exports.permissionRequired = 0
+module.exports.argsRequired = 0
 
 module.exports.description = {
     "description": "Get a link to the documentation or get help on a command.",
